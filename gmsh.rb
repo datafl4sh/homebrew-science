@@ -7,16 +7,16 @@ end
 class Gmsh < Formula
   desc "3D finite element grid generator with CAD engine"
   homepage "http://geuz.org/gmsh"
-  url "http://gmsh.info/src/gmsh-2.13.2-source.tgz"
-  sha256 "6f61352cc80a41118600507ee8a4c3a28052d93466c5a8510558ed936d3b11e3"
+  url "http://gmsh.info/src/gmsh-2.14.0-source.tgz"
+  sha256 "8b344f29ace99167578158fcc4854461630b26808cff9e2dea134ab4267991cd"
 
   head "https://geuz.org/svn/gmsh/trunk", :using => GmshSvnStrategy
 
   bottle do
     cellar :any
-    sha256 "888043a9e74aee1204adc975438176e0709fe8f45116153f2a87d6b2839377b8" => :sierra
-    sha256 "4191d10aabca9cb9e3a91db337207ce3feef03a2c30d968c20518134c0173d0c" => :el_capitan
-    sha256 "5eda327615aa4ea199be8e871f58a8e308de7b1b9df9726bfe8448c009019770" => :yosemite
+    sha256 "0d36a78031116182d36f257a07100bef1e7dcafb5c4ec190734b16a845f23341" => :sierra
+    sha256 "12e60bf43854d38bdf704529fa716d7b0be8d43d3c508090eb898c96b540a988" => :el_capitan
+    sha256 "a34e8f6c644d14759459ebb73bb209acbacfa61757fdc7e6431434e1e1bc660f" => :yosemite
   end
 
   option "with-oce",               "Build with oce support (conflicts with opencascade)"
