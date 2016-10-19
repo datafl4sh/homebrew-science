@@ -1,25 +1,25 @@
 class Silo < Formula
-  desc "LLNL Silo library"
+  desc "LLNL Silo library. The library allows to create databases for the visualization tool VisIt."
   homepage "https://wci.llnl.gov/simulation/computer-codes/silo"
   url "https://wci.llnl.gov/content/assets/docs/simulation/computer-codes/silo/silo-4.10.2/silo-4.10.2-bsd.tar.gz"
   sha256 "4b901dfc1eb4656e83419a6fde15a2f6c6a31df84edfad7f1dc296e01b20140e"
 
-  depends_on :x11
+  option "with-x11",        "Use the X Window System"
+
+  depends_on :x11           if build.with? "x11"
   depends_on :fortran
   depends_on "readline"
 
-  option "with-x",       "Use the X Window System"
 
   def install
     args = ["--prefix=#{prefix}"]
     args << "--enable-optimization"
-    args << "--enable-x"        if build.with? "x"
-    args << "--enable-silex"    if build.with? "silex"
+    args << "--enable-x" if build.with? "x11"
 
     ENV.append "LDFLAGS", "-L#{Formula["readline"].opt_lib} -lreadline"
     system "./configure", *args
     system "make", "install"
-    rm "#{lib}/libsilo.settings"
+    rm lib/"libsilo.settings"
   end
 
   test do
@@ -37,7 +37,7 @@ class Silo < Formula
             return 0;
         }
         EOS
-  system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lsilo", "-o", "test"
-  system "./test"
+    system ENV.cc, "test.c", "-I#{opt_include}", "-L#{opt_lib}", "-lsilo", "-o", "test"
+    system "./test"
   end
 end
