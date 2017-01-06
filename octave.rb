@@ -1,17 +1,15 @@
 class Octave < Formula
   desc "High-level interpreted language for numerical computing"
   homepage "https://www.gnu.org/software/octave/index.html"
+  url "https://ftpmirror.gnu.org/octave/octave-4.2.0.tar.lz"
+  mirror "https://ftp.gnu.org/gnu/octave/octave-4.2.0.tar.lz"
+  sha256 "119d45c21d567c02eb0042987da4676aa25c7c2fde6e119053e0c6d779a47ba7"
   revision 1
 
-  stable do
-    url "ftp://alpha.gnu.org/gnu/octave/octave-4.2.0-rc2.tar.xz"
-    sha256 "42982be516d7f27719d019bc93020304781607d7a9203c7043570dbf27ab9a24"
-  end
-
   bottle do
-    sha256 "48ff4fefeb6077484abfd7330d47fb9cb713903ce051b66a7763cee14c707638" => :sierra
-    sha256 "95851c6eb4ed014468366967018cc5d401e14bf861e78dd46cfcad86d8d6edc2" => :el_capitan
-    sha256 "d1332fd37682f51aa9b678000f560ac687d392d9dceec0b873b2e2ff7df391ca" => :yosemite
+    sha256 "111afdbd235cf1150aafa781986b200893010bea579be681d1d9565513fb07e2" => :sierra
+    sha256 "6b73d53148279442587b3eea063c8de9a1022f31b5eb2df453cfe6dd999404f7" => :el_capitan
+    sha256 "5f77b2b04db7133e7d9d529149d4e690a47ef1a4045766873cd23a16b80c303a" => :yosemite
   end
 
   if OS.mac? && DevelopmentTools.clang_version < "7.0"
@@ -20,12 +18,6 @@ class Octave < Formula
     patch do
       url "http://savannah.gnu.org/bugs/download.php?file_id=32255"
       sha256 "ef83b32384a37cca13ecdd30d98dacac314b7c23f2c1df3d1113074bd1169c0f"
-    end
-    # Fixes includes "base-list.h" and "config.h" in comment-list.h and "oct.h" (bug #41027)
-    # Core developers don't like this fix, see: http://savannah.gnu.org/bugs/?41027
-    patch do
-      url "http://savannah.gnu.org/bugs/download.php?file_id=31400"
-      sha256 "efdf91390210a64e4732da15dcac576fb1fade7b85f9bacf4010d102c1974729"
     end
   end
 
@@ -136,6 +128,13 @@ class Octave < Formula
   depends_on "portaudio"           => :optional
   depends_on :java                 => ["1.6+", :optional]
 
+  # Fix bug #49053: retina scaling of figures
+  # see https://savannah.gnu.org/bugs/?49053
+  resource "retina-scaling-patch" do
+    url "https://savannah.gnu.org/support/download.php?file_id=38902"
+    sha256 "d56eff94f9f811845ba3b0897b70cba43c0715a0102b1c79852b72ab10d24e6c"
+  end
+
   # If GraphicsMagick was built from source, it is possible that it was
   # done to change quantum depth. If so, our Octave bottles are no good.
   # https://github.com/Homebrew/homebrew-science/issues/2737
@@ -151,6 +150,14 @@ class Octave < Formula
     ENV.append "LDFLAGS", "-L#{Formula["readline"].opt_lib} -lreadline" if build.with? "readline"
     ENV.prepend_path "PATH", Formula["texinfo"].bin
     ENV["FONTCONFIG_PATH"] = "/opt/X11/lib/X11/fontconfig"
+
+    resource("retina-scaling-patch").stage do
+      inreplace "download.php" do |s|
+        s.gsub! "#include <QApplication.h>", "#include <QApplication>"
+        s.gsub! "__fontsize_points__", "fontsize_points" if build.stable?
+      end
+      system "patch", "-p1", "-i", Pathname.pwd/"download.php", "-d", buildpath
+    end
 
     # basic arguments
     args = ["--prefix=#{prefix}"]

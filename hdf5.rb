@@ -1,14 +1,15 @@
 class Hdf5 < Formula
   desc "File format designed to store large amounts of data"
   homepage "http://www.hdfgroup.org/HDF5"
-  url "https://support.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.17.tar.bz2"
-  sha256 "fc35dd8fd8d398de6b525b27cc111c21fc79795ad6db1b1f12cb15ed1ee8486a"
+  url "https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.18.tar.bz2"
+  sha256 "01c6deadf4211f86922400da82c7a8b5b50dc8fc1ce0b5912de3066af316a48c"
 
   bottle do
     rebuild 1
-    sha256 "3d6b60b56633ecc509acd399971c31110c5b5cc5860a72ecb7c356cc5e162996" => :el_capitan
-    sha256 "a4c0921b63aba820480a2da1c96e898e583d43bf09468395a760d81d5c770dc6" => :yosemite
-    sha256 "d42f35bc72ff2eecfc6a7c78a7ca6b76f8e319d312771f96d5d78f2e93889eaa" => :mavericks
+    sha256 "fa9f4a985cd6ad85fc8ad12816476298cd0ff29952d781bcbe63a0746028d6c6" => :sierra
+    sha256 "07043fcf3040d9d6ba44444c40a6a87c8f5184c4f4e839f5bd9a84b5cd1d29a2" => :el_capitan
+    sha256 "2a099c9eebdd90629d4c6f16e43282a1894a792ae0b43d00e8597584fb1f0f7c" => :yosemite
+    sha256 "dac5fa5c4796fda82b2f60f7a5f8da9792fabae354d68f29c8f4cce5727058bf" => :x86_64_linux
   end
 
   deprecated_option "enable-fortran" => "with-fortran"
@@ -96,7 +97,7 @@ class Hdf5 < Formula
         return 0;
       }
     EOS
-    system "h5cc", "test.c"
-    assert_match(/#{version}/, shell_output("./a.out"))
+    system "#{bin}/h5cc", "test.c"
+    assert_match version.to_s, shell_output("./a.out")
   end
 end

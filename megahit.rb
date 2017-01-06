@@ -4,23 +4,15 @@ class Megahit < Formula
   # doi "10.1093/bioinformatics/btv033"
   # tag "bioinformatics"
 
-  url "https://github.com/voutcn/megahit/archive/v1.0.6.tar.gz"
-  sha256 "16dde39241e11c69f20f7b55c0d28db40860ace9e624db9e43e06e34cb052c11"
-
+  url "https://github.com/voutcn/megahit/archive/v1.1.1.tar.gz"
+  sha256 "09c6b97acbb6a0dca0262e3251ca8823fa73d8adb305a6f8258113b9c6059f86"
   head "https://github.com/voutcn/megahit.git"
 
   bottle do
-    sha256 "7f4912f5884915f4a9f95c60880e72aaafe16c5e632449777859bb313302e542" => :sierra
-    sha256 "9828d04f35fbbc5106dad0e696d8eb5d4b85a522aaba03061355939d36972244" => :el_capitan
-    sha256 "4628d5e3c19988808e15c631ebc08a20eef96d5a4f7773c67163fb715f721ef9" => :yosemite
-    sha256 "cbe3c26c1b373422fac89b257ff7b805c8ef62b3c74573c492e6b5654ea1e17b" => :x86_64_linux
-  end
-
-  # Fix error: 'HashGraph::HashGraph(const HashGraph&)' is private within this context
-  # Fixed upstream: https://github.com/voutcn/megahit/issues/96
-  patch do
-    url "https://github.com/voutcn/megahit/commit/a9f7e90e537f79684fc2d76da971b60cac48bfa0.patch"
-    sha256 "5ec070ae1611df9b0c12e3566f7a6bf6c9f933c3b3e62f46edf2ca1fd5ab5ed1"
+    sha256 "278e59d8abd9baad784b49570ad37fe2e2863dc5b85fe52c0d75c1e68bb31764" => :sierra
+    sha256 "68222fb694024e331a0dd56ca69e82788c20c6d281d0c4f4a697f0c307650ae5" => :el_capitan
+    sha256 "dbf4070e1c2756d728cc49a465f63287c6d86c4bd103f5caf895b6a392253fa8" => :yosemite
+    sha256 "40cf2e2c113eb4b1b4cfc7ad4c961bfa66e29eb0325b91bda5fffa507c968825" => :x86_64_linux
   end
 
   fails_with :llvm do

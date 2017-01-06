@@ -1,18 +1,19 @@
 class SnpSites < Formula
   desc "Find SNP sites in a multi FASTA alignment file"
   homepage "https://github.com/sanger-pathogens/snp-sites"
-  url "https://github.com/sanger-pathogens/snp-sites/archive/2.2.0.tar.gz"
-  sha256 "6ee85a175871218d40ba25677814b1ec7959bfa16435f497f8167c06bce2a6c6"
-  head "https://github.com/sanger-pathogens/snp-sites.git"
   # doi "10.1101/038190"
   # tag "bioinformatics"
 
+  url "https://github.com/sanger-pathogens/snp-sites/archive/2.3.2.tar.gz"
+  sha256 "7a77af914b0baa425ccacedf2e4fbb2cac984fe671f3d8c07d98d3596202ed89"
+  head "https://github.com/sanger-pathogens/snp-sites.git"
+
   bottle do
     cellar :any
-    sha256 "fc578b9dc761947865807d14c58adfbfa53c2c25924c37be95459df5bbd26ed3" => :el_capitan
-    sha256 "1dec6728adb00f284429b636b6bae8575a3437b4812b012b74f3225bb8eb09bd" => :yosemite
-    sha256 "1f53e480cce81b4cd405de5196d7297b67765757ac0b896c1622a7e428f7debc" => :mavericks
-    sha256 "f8e5d6646175a8c7fe09e23868c4a23f9020c8c3d36140a468e20106a21a55fc" => :x86_64_linux
+    sha256 "2a1fc64def2288b12ebd1ce7a9ce5265a9cd0ad900ccf6230a00edee4e7a37b4" => :sierra
+    sha256 "c7350da7fd4fd2eb59e983de0927e3cd14a77968410f5584171f0fae570609ef" => :el_capitan
+    sha256 "8b0dcb2e7fefd753f4eb11df8a117725a7a3aed8e1694ca13de19121bf296b64" => :yosemite
+    sha256 "d4fba5117af1976be010b60a810ae39b59d6df53921a3ccdf31b190bfd2622ae" => :x86_64_linux
   end
 
   depends_on "autoconf" => :build
@@ -35,6 +36,6 @@ class SnpSites < Formula
   end
 
   test do
-    system "snp-sites"
+    assert_match "#{version}", shell_output("#{bin}/snp-sites -V 2>&1", 0)
   end
 end

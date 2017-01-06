@@ -3,11 +3,13 @@ class Shogun < Formula
   homepage "http://www.shogun-toolbox.org"
   url "http://shogun-toolbox.org/archives/shogun/releases/4.1/sources/shogun-4.1.0.tar.bz2"
   sha256 "0eb313a95606edee046768a4577d63f32f7ccce340bed7bf0ff0d69225567185"
+  revision 2
 
   bottle do
-    sha256 "1c8664a8d548482e328384b29b6897472ee3a7dffa9b87940f71df53d155fdc3" => :el_capitan
-    sha256 "75fc22e23b0a37e6eec05ea1efe16b02558e9a43a31278026927dbe349bdc533" => :yosemite
-    sha256 "65a824e46b8af4f31c318954a1446ea939e4466e34d9d5d25e21624092355f4e" => :mavericks
+    sha256 "bb97d16ea75d013d2b28cb37810d8f751aa886dc38612a4c2daeca5b993655fc" => :sierra
+    sha256 "bc30027747a6fb55159eb8735f2027ad29f973aae3f8a64002b6ed1d28b191b3" => :el_capitan
+    sha256 "06fcb649132cdc07bf234c4c6e05ad9e46a525aad7219cf091a38f7050117732" => :yosemite
+    sha256 "9cb6d91f22eb9343bac860031b7e3fad5d119d0435136371d78ffadc61d55ed4" => :x86_64_linux
   end
 
   depends_on "pkg-config" => :build
@@ -20,7 +22,7 @@ class Shogun < Formula
   depends_on "json-c"
   depends_on "readline"
   depends_on "nlopt"
-  depends_on "eigen"
+  depends_on "homebrew/versions/eigen32"
   depends_on "arpack"
   depends_on "colpack"
   depends_on "glpk"
@@ -41,6 +43,13 @@ class Shogun < Formula
 
   def cmake_use(opt, arg)
     "-D#{arg}=#{build.with?(opt) ? "ON" : "OFF"}"
+  end
+
+  # fix error downloading gmock; remove for > 4.1.0
+  # upstream commit from 26 Aug 2016 "Googlecode is dead for good"
+  patch do
+    url "https://github.com/shogun-toolbox/shogun/commit/4dd6193.patch"
+    sha256 "f8bc03d603e7a43d38e36568fc82652290069efc4e70f5cef7a17429480ab881"
   end
 
   def install
@@ -70,6 +79,7 @@ class Shogun < Formula
 
     mkdir "build" do
       system "cmake", "..", *args
+      system "make", "GoogleMock"
       system "make"
       system "make", "install"
     end

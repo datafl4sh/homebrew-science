@@ -4,16 +4,16 @@ class Sratoolkit < Formula
   # doi "10.1093/nar/gkq1019"
   # tag "bioinformatics"
 
-  url "https://github.com/ncbi/sra-tools/archive/2.8.0.tar.gz"
-  sha256 "df6ea1041d3fd3aab357b4c01c43d0054358a0e7f985a59511cae9c9e220b70a"
+  url "https://github.com/ncbi/sra-tools/archive/2.8.1.tar.gz"
+  sha256 "b000671b5664abe1dcae266d659960990cb3c45b4762ed6bd0c0aa156093bff9"
   head "https://github.com/ncbi/sra-tools.git"
 
   bottle do
     cellar :any
-    sha256 "45c37805ea30f294fc184f2abcb1d1676499635cfc31a3ba6d03a8c6b5ad740f" => :sierra
-    sha256 "59dd859f7796c64ce25c3f03285bc6f4d0120c6c228021f074854a9ce3df30fd" => :el_capitan
-    sha256 "3b89566ee4e0b52d118a82efb8349b8617c54b1e7c5b538992ddd60c4bcfcd95" => :yosemite
-    sha256 "b96fca67fe48bc75035455644727489cea8e7d60cc66304e69e6d5ee3c283571" => :x86_64_linux
+    sha256 "c05e33530b2931015e54397f9b5cd6394022a6173c6e69f6bab4e3e2d0846af7" => :sierra
+    sha256 "ab98ad3d8d18cc7cd12c79e65b8b64c5e51febc0e8d8b369f318029e8e07eb8e" => :el_capitan
+    sha256 "ba2d87f2f9efc9be0b300276d9054205dc5f6cd249c9f1b67b09b690ace53a3c" => :yosemite
+    sha256 "d4233ae951357554f242548656c35b8854c43b5427c3a4be68664666baa730b5" => :x86_64_linux
   end
 
   depends_on "autoconf" => :build
@@ -27,8 +27,8 @@ class Sratoolkit < Formula
   end
 
   resource "ncbi-vdb" do
-    url "https://github.com/ncbi/ncbi-vdb/archive/2.8.0.tar.gz"
-    sha256 "efa0b9b4987db7ef80e2c91ba35f5a0bab202e3a4824e8f34c51de303ca4eb17"
+    url "https://github.com/ncbi/ncbi-vdb/archive/2.8.1.tar.gz"
+    sha256 "5e8c03adf6305090de6aeeaa8c06df0cc8ac7b7d35e3dd6462e2d0b4788c21fa"
   end
 
   def install
@@ -75,6 +75,8 @@ class Sratoolkit < Formula
     rm_rf "#{bin}/ncbi"
     rm_rf "#{lib}64"
     rm_rf include.to_s
+
+    pkgshare.install share/"examples"
   end
 
   test do

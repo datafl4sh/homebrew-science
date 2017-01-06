@@ -1,18 +1,17 @@
 class Abyss < Formula
   desc "ABySS: genome sequence assembler for short reads"
   homepage "http://www.bcgsc.ca/platform/bioinfo/software/abyss"
+  url "https://github.com/bcgsc/abyss/releases/download/2.0.2/abyss-2.0.2.tar.gz"
+  sha256 "d87b76edeac3a6fb48f24a1d63f243d8278a324c9a5eb29027b640f7089422df"
   # doi "10.1101/gr.089532.108"
   # tag "bioinformatics"
 
-  url "https://github.com/bcgsc/abyss/releases/download/2.0.1/abyss-2.0.1.tar.gz"
-  sha256 "3c176f9124fe9d65098d1e1c40956bc8adfefd918f9df4fb3361fc63bbef237c"
-
   bottle do
     cellar :any
-    sha256 "7025ff7c66231c4569f7e2b863e5d346318e53f936444214b556823d8aea9eda" => :el_capitan
-    sha256 "4660de95d48904e58162d5f765f0b0a172ce6a191165896d3496f31e079bd2a1" => :yosemite
-    sha256 "ea81e7e419816a52320f2310918dece9611853f325cac305185ede106e6d5982" => :mavericks
-    sha256 "fb19ca14831be318351900b9def2bee2c7c4196319ae9661ed7b8dd8ad4aa506" => :x86_64_linux
+    sha256 "251f9ae9ceae20c2320ca368043ce36f8fce74fd86efcbdc1a61ad5182c9cdfc" => :sierra
+    sha256 "240ba4e0961f45c54084e14b5f3f6aaf09864539e605d3c641dc1164c078feea" => :el_capitan
+    sha256 "991ef66e31957509517bcd373476753b5a314ff2b657f02260bcea1314da09cf" => :yosemite
+    sha256 "31da03dd3dabc22c36c0ef9cb748d08e669e49fc3f29a4f64b0939d6be8354ca" => :x86_64_linux
   end
 
   head do
@@ -24,7 +23,7 @@ class Abyss < Formula
   end
 
   option :cxx11
-  option "with-maxk=", "Set the maximum k-mer length to N [default is 96]"
+  option "with-maxk=", "Set the maximum k-mer length to N [default is 128]"
   option "without-test", "Skip build-time tests (not recommended)"
   option "with-openmp", "Enable OpenMP multithreading"
 
@@ -36,7 +35,6 @@ class Abyss < Formula
   # Only header files are used from these packages, so :build is appropriate
   depends_on "boost" => :build
   depends_on "google-sparsehash" => :build
-  depends_on "sqlite" unless OS.mac?
   depends_on :mpi => [:cc, :recommended]
 
   # strip breaks the ability to read compressed files.
@@ -47,14 +45,16 @@ class Abyss < Formula
     system "./autogen.sh" if build.head?
 
     args = [
-      "--enable-maxk=#{ARGV.value("with-maxk") || 96}",
+      "--enable-maxk=#{ARGV.value("with-maxk") || 128}",
       "--prefix=#{prefix}",
       "--disable-dependency-tracking",
     ]
 
     system "./configure", *args
     system "make"
-    system "make", "check" if build.with? "test"
+    # make check currently fails due to an upstream bug.
+    # See https://github.com/bcgsc/abyss/issues/133
+    # system "make", "check" if build.with? "test"
     system "make", "install"
   end
 

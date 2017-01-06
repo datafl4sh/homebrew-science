@@ -1,20 +1,19 @@
 class Hlaminer < Formula
   desc "HLA predictions from next-generation shotgun (NGS) sequence read data"
   homepage "http://www.bcgsc.ca/platform/bioinfo/software/hlaminer"
+  url "http://www.bcgsc.ca/platform/bioinfo/software/hlaminer/releases/1.3.1/HLAminer_v1-3-1.tar.gz"
+  version "1.3.1"
+  sha256 "91d510fe9d5c731e6756f6680738bc64fb61844758ede2a4160608945b6ef8cf"
   # doi "10.1186/gm396"
   # tag "bioinformatics"
 
-  url "http://www.bcgsc.ca/platform/bioinfo/software/hlaminer/releases/1.1/HLAminer.tar.gz"
-  version "1.1.0"
-  sha256 "2c3e4458215f06764f58e8f3d95fb8e3a47d2a19152478d047453944c8cb84c3"
-  revision 1
-
   bottle do
     cellar :any_skip_relocation
-    sha256 "724c4478e180fc6f630cf234360801c04d0a0f7804a7001ec1eb2a39ef9bb4d6" => :el_capitan
-    sha256 "cc1cbaff172fc42207a12641c04d25d2e24e958b6b33452d67baafe889e58df0" => :yosemite
-    sha256 "2f8c2b6f80d300c2d9987712a55b2d1c8d8f83af01715a74f6cc81b53997c1df" => :mavericks
-    sha256 "a14c112b3a1577bf53f5be1aed2450fcee76acd856b5bdb6813c895a4c6af4bf" => :x86_64_linux
+    rebuild 1
+    sha256 "7a81914e6f4781791ec84a8a4eec2449c38bdefd8a848e658a4d5c5f3343f3b9" => :sierra
+    sha256 "a5ad58d7d29a571112a9848112a8d7f59924e0c8876a04bd22ce73103f0b9581" => :el_capitan
+    sha256 "433c03cb3ec3d0ab2ea78902064172e8f52e424dbbce9e492c4dd0aa28489628" => :yosemite
+    sha256 "898f7402a96f849c0598de4605848abef0ec7a491a792752867694f97bdd4020" => :x86_64_linux
   end
 
   depends_on "blast"
@@ -29,6 +28,6 @@ class Hlaminer < Formula
   end
 
   test do
-    assert_match "HLAminer.pl [v1.1]", shell_output("#{bin}/HLAminer.pl", 255)
+    assert_match "HLAminer.pl [v1.3]", shell_output("#{bin}/HLAminer.pl", 255)
   end
 end

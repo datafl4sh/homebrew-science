@@ -7,16 +7,15 @@ end
 class Getdp < Formula
   desc "Open source finite element solver using mixed elements."
   homepage "http://www.geuz.org/getdp/"
-  url "http://www.geuz.org/getdp/src/getdp-2.9.2-source.tgz"
-  sha256 "15f4a88c9344234834e8fa0d6b26988ab05f6fe0b2720964083bdcda42351fa1"
-  revision 1
+  url "http://getdp.info/src/getdp-2.10.0-source.tgz"
+  sha256 "2f16b2ce9941aada75ddfef4eb5b96d0c47478e4ed82a67dc4ca8e3ff8f72599"
 
   head "https://geuz.org/svn/getdp/trunk", :using => GetdpSvnStrategy
 
   bottle do
-    sha256 "851540a49454b54f6136dcc6f05fa7c7ef1b53e89926a922d8f960b53761dd3d" => :sierra
-    sha256 "65b2eb4c7f5d23d068bb38362bb8f818f0dabf017b8e993488eae3508c644857" => :el_capitan
-    sha256 "be82d423cef3d8d379f992100a8dcc85c889cf22f54238238da7f9e3dc967ce9" => :yosemite
+    sha256 "939ff499c9e99e6cf848615f48ec976f022ff40747873965cc11aae075e9630a" => :sierra
+    sha256 "144587706d997553d5133c5ef3e421822bf487fde45ea0e5501c5e697fe40be7" => :el_capitan
+    sha256 "4cfa0f317634f13512b49d7a65c4d2a57c82b864d2c45a914e678570809e0d0f" => :yosemite
   end
 
   option "without-test", "skip build-time tests (not recommended)"

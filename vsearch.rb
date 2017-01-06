@@ -1,18 +1,18 @@
 class Vsearch < Formula
   desc "USEARCH-compatible metagenomic sequence tool"
   homepage "https://github.com/torognes/vsearch"
-  url "https://github.com/torognes/vsearch/archive/v2.3.0.tar.gz"
-  sha256 "de255701d791e6a2f2d1a6764b3084ac4a6c4a264d3b583c2283c609f9980ee5"
+  url "https://github.com/torognes/vsearch/archive/v2.3.4.tar.gz"
+  sha256 "5411ab85179b090e4c56415744e0e432b2fdbce2889d8f7aafc2740f6b57d9f7"
   head "https://github.com/torognes/vsearch.git"
   # doi "10.5281/zenodo.31443"
   # tag "bioinformatics"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "e3ab9ea62d53de95017d464e1036f57e0b63970494d851fbc692ca813b1206b5" => :sierra
-    sha256 "e3ab9ea62d53de95017d464e1036f57e0b63970494d851fbc692ca813b1206b5" => :el_capitan
-    sha256 "ef45a18ac0030fa54bb2664030af660cfa31f59eae1e83885de15854582400c4" => :yosemite
-    sha256 "32fd3cfcad7dd149086c23a01187a88e95edb3fc2fa32151c2826d1133cd8e17" => :x86_64_linux
+    sha256 "297ae30cc91288c0cd0dff91501ea6410f9e93678bb8fc4c9666e2c931abc398" => :sierra
+    sha256 "4114a95029fc1e7e398e4bef838325f99e98bae3d85b004917c822eaa3197061" => :el_capitan
+    sha256 "ab557fa500dcc49620d48b76c42a073d47605b2710bf0484aa3aab1a59ec7dc1" => :yosemite
+    sha256 "c296eb55fc2114ac67fbaffbafee4e5b9c02604a002fd1caed3222b8d0052bd9" => :x86_64_linux
   end
 
   depends_on "autoconf" => :build

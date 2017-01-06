@@ -1,26 +1,28 @@
 class Root6 < Formula
   # in order to update, simply change version number and update sha256
-  version_number = "6.06.08"
+  version_number = "6.08.02"
   desc "Object oriented framework for large scale data analysis"
   homepage "https://root.cern.ch"
   url "https://root.cern.ch/download/root_v#{version_number}.source.tar.gz"
   mirror "https://fossies.org/linux/misc/root_v#{version_number}.source.tar.gz"
   version version_number
-  sha256 "7cb836282014cce822ef589cad27811eb7a86d7fad45a871fa6b0e6319ec201a"
+  sha256 "131c50a81e72a1cd2b2825c66dbe3916c23b28006e84f5a028baed4c72d86014"
 
   head "http://root.cern.ch/git/root.git"
 
   bottle do
-    sha256 "17b5f629f0b10ea6ae17d7dc12ebaf081428a422237394694575afb8bd7ac121" => :el_capitan
-    sha256 "446c34bc14b49275c7d7f1dc2d89ee5b328e63890837791f99874f6f74cae765" => :yosemite
-    sha256 "ac65c9ee47d2f23474db1d9fe0a6589b52e5d118aec120aa729eb3988546e0af" => :mavericks
+    sha256 "2a6cc29e06d90e1bbca848b06844263ba692e3edc482c279cfcdfb2073a6e5f2" => :sierra
+    sha256 "5de820b6d8d37d36962bc57a4f8f0ce4febd06c0bb7ad5bfadf59e5f0d6847f4" => :el_capitan
+    sha256 "da8baf9db5a25c18edbc634794cbca3b773fe22b517ab1a734ff4d5bb1ae2253" => :yosemite
   end
 
   depends_on "cmake" => :build
   depends_on "xrootd" => :optional
+  depends_on "fftw" => :optional
   depends_on "openssl" => :recommended # use homebrew's openssl
   depends_on :python => :recommended # make sure we install pyroot
   depends_on :x11 => :recommended if OS.linux?
+  depends_on :fortran => :recommended # enabled by default since 6.08.00
   depends_on "gsl" => :recommended
   # root5 obviously conflicts, simply need `brew unlink root`
   conflicts_with "root"
@@ -57,6 +59,8 @@ class Root6 < Formula
       #{config_opt("ssl", "openssl")}
       #{config_opt("xrootd")}
       #{config_opt("mathmore", "gsl")}
+      #{config_opt("fortran")}
+      #{config_opt("fftw3", "fftw")}
     ]
 
     # ROOT forbids running CMake in the root of the source directory,

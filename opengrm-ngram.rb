@@ -1,13 +1,15 @@
 class OpengrmNgram < Formula
+  desc "Open-source library for constructing ngram language models, represented as weighted finite-state transducers."
   homepage "http://www.openfst.org/twiki/bin/view/GRM/NGramLibrary"
-  url "http://openfst.cs.nyu.edu/twiki/pub/GRM/NGramDownload/opengrm-ngram-1.3.0.tar.gz"
-  sha256 "bb5b4cb609f0beab6fabbb65234c818199a17a49e534bde270c6f72d880fe2b3"
+  url "http://openfst.cs.nyu.edu/twiki/pub/GRM/NGramDownload/opengrm-ngram-1.3.1.tar.gz"
+  sha256 "fd862680405000bbc789d0826237cca3295d0b778e5c0e2fa5e7762d33d3fbf2"
 
   bottle do
     cellar :any
-    sha256 "b928df84a8aff4878aa17df8b5d774ccb5e6aa98f2c59c3e1edd5307c95067c9" => :el_capitan
-    sha256 "171dc8daa8603d2e052355e038b797a3f77f90f5af896f30b64262b9e63d9b5f" => :yosemite
-    sha256 "5339487fc2738453ce23ff42fbcd76f0c25ef64c99f7e111a6bd1a23b7a327d4" => :mavericks
+    sha256 "5c3192e90447fb767ed3148faba7a6c03a490f2b18822498e521d882e2bf567f" => :sierra
+    sha256 "bcd431e07e5b30194fbd05a0ff33c815fdc494ecfbc5f7ba26db137a98c21991" => :el_capitan
+    sha256 "170cc253710c074fd0f9275a4cb8d01746e33b9855fad957e19e3643f32af47e" => :yosemite
+    sha256 "82c07698a1044cff7599deb13a1acc12518569bf4a5e334d725765cf37767845" => :x86_64_linux
   end
 
   depends_on "openfst"

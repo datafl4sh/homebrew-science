@@ -4,15 +4,15 @@ class Diamond < Formula
   # doi "10.1038/nmeth.3176"
   # tag "bioinformatics"
 
-  url "https://github.com/bbuchfink/diamond/archive/v0.8.24.tar.gz"
-  sha256 "7d8047dca0cc62f5d429b09bfb65e742deca9d5fed3be93b17146b15e4c771e0"
+  url "https://github.com/bbuchfink/diamond/archive/v0.8.31.tar.gz"
+  sha256 "b89fec7665346d80dd3e8e0c7fb599117cd0f6c9831cf568dd08bf9b894b075a"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "db899e29c438f1002dafdb3b22811683f486b878db6cfdc0a848948ebd36cfb2" => :sierra
-    sha256 "5155f5e55a77b6fa626112d3739bd56bb227ad6327cb18b84c61fc241142bee5" => :el_capitan
-    sha256 "b5eca8d028b24712750fa3cd42a817bd5efa5ff64670d77e4bc07600532514bd" => :yosemite
-    sha256 "cac7e089e8cd168c4347533b6a846a23e0084207f7d8c7b04e920b4edcc720f6" => :x86_64_linux
+    sha256 "a85b3ce2fe8e3e959aad033dcb1f9f9b5bb0a0ba7347789065b96089823578ae" => :sierra
+    sha256 "b3d874e68b7ee52acf3adf1fd2466ea3141671ef7347919a0a72c0bf4f67d797" => :el_capitan
+    sha256 "fc79a1171332c37207a03be4da5014768960b3b10d6dda1968f63712f5d02b9f" => :yosemite
+    sha256 "b3b12ff4572bd860f744e9cb0c1f1067cd659e2c3d5e4b2e5bd7628d26cb5c1d" => :x86_64_linux
   end
 
   depends_on "cmake" => :build

@@ -1,31 +1,33 @@
 class Mumps < Formula
   desc "Parallel Sparse Direct Solver"
   homepage "http://mumps-solver.org"
-  url "http://mumps.enseeiht.fr/MUMPS_5.0.1.tar.gz"
-  mirror "http://graal.ens-lyon.fr/MUMPS/MUMPS_5.0.1.tar.gz"
-  sha256 "50355b2e67873e2239b4998a46f2bbf83f70cdad6517730ab287ae3aae9340a0"
-  revision 4
+  url "http://mumps.enseeiht.fr/MUMPS_5.0.2.tar.gz"
+  mirror "http://graal.ens-lyon.fr/MUMPS/MUMPS_5.0.2.tar.gz"
+  sha256 "77292b204942640256097a3da482c2abcd1e0d5a74ecd1d4bab0f5ef6e60fe45"
 
   bottle do
     cellar :any
-    sha256 "eeaaf0e5cd4bd4e0ef3aefa142867e65635df2a78f6519e0422c2eefaeb29d6a" => :el_capitan
-    sha256 "8f2faaf6abac6b1e19dcda7cbc1331275b2c3588d1f9b247ebc63e6870770e62" => :yosemite
-    sha256 "e7a7b0e17d710f9f88941de2f40f521ac0f091e92a7e3c8853562e51b8001337" => :mavericks
+    sha256 "bc6b4ff949520d550cd9808b3af48293ebb250b8a2c842e3f7389e8cff9491b9" => :sierra
+    sha256 "a4cd336293ca818e7b3f9a6df27488b30ce813bbb5d425189776b92b8fc0cab4" => :el_capitan
+    sha256 "4f3412a8017d46db7e1ead3eed0069f50dc28f97c322edfc8e11c26435326723" => :yosemite
   end
 
   depends_on :mpi => [:cc, :cxx, :f90, :recommended]
+  depends_on "openblas" => OS.mac? ? :optional : :recommended
+  depends_on "veclibfort" if build.without?("openblas") && OS.mac?
+  depends_on :fortran
+
   if build.with? "mpi"
-    depends_on "scalapack" => (build.with? "openblas") ? ["with-openblas"] : []
+    if OS.mac?
+      depends_on "scalapack" => build.with?("openblas") ? ["with-openblas"] : []
+    else
+      depends_on "scalapack" => build.without?("openblas") ? ["without-openblas"] : []
+    end
   end
   depends_on "metis"    => :optional if build.without? "mpi"
   depends_on "parmetis" => :optional if build.with? "mpi"
   depends_on "scotch5"  => :optional
   depends_on "scotch"   => :optional
-
-  depends_on "openblas" => :optional
-  depends_on "veclibfort" if build.without?("openblas") && OS.mac?
-
-  depends_on :fortran
 
   resource "mumps_simple" do
     url "https://github.com/dpo/mumps_simple/archive/v0.4.tar.gz"
@@ -184,7 +186,7 @@ class Mumps < Formula
   test do
     ENV.fortran
     cp_r pkgshare/"examples", testpath
-    opts = ["-I#{opt_include}", "-L#{opt_lib}", "-lmumps_common"]
+    opts = ["-I#{opt_include}", "-L#{opt_lib}", "-lmumps_common", "-lpord"]
     if Tab.for_name("mumps").with? "openblas"
       opts << "-L#{Formula["openblas"].opt_lib}" << "-lopenblas"
     elsif OS.mac?
@@ -195,7 +197,8 @@ class Mumps < Formula
     if Tab.for_name("mumps").with?("mpi")
       f90 = "mpif90"
       cc = "mpicc"
-      mpirun = "mpirun -np #{Hardware::CPU.cores}"
+      mpirun = "mpirun -np 2"
+      opts << "-lscalapack"
     else
       f90 = ENV["FC"]
       cc = ENV["CC"]
@@ -213,7 +216,7 @@ class Mumps < Formula
       system "#{mpirun} ./zsimpletest < input_simpletest_cmplx"
       system cc, "-c", "c_example.c", "-I#{opt_include}"
       system f90, "-o", "c_example", "c_example.o", "-ldmumps", *opts
-      system "#{mpirun} ./c_example"
+      system *(mpirun.split + ["./c_example"] + opts)
     end
   end
 end

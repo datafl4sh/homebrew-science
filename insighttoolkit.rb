@@ -3,12 +3,13 @@ class Insighttoolkit < Formula
   homepage "http://www.itk.org"
   url "https://downloads.sourceforge.net/project/itk/itk/4.10/InsightToolkit-4.10.1.tar.gz"
   sha256 "cb1048facf2b60cebf4ea0b3f89a13a32f8036d906aab3cfafa65e94760caa7a"
+  revision 2
   head "git://itk.org/ITK.git"
 
   bottle do
-    sha256 "62e93503655321f3712dcae5a105da5d4212e80bdfaab6dec8323053d6fd1402" => :sierra
-    sha256 "7799241b6c60e73f1cccfc638aa8872edcf6a29d04c5d874edb285a99d7c335b" => :el_capitan
-    sha256 "6e8ac66c3945fbbcda9f2868a171e2f95194ca772cd2c6888b800da9cb00fc10" => :yosemite
+    sha256 "b2f7d608305f43791c9e4c5b6f3fab62a8e584f2dd811c8a1de4a7076a834bb6" => :sierra
+    sha256 "462207580976416c18829b4c4658b85dee3fc1c93e1b8a22edde5d96e06ad837" => :el_capitan
+    sha256 "8e58ec5de801dddaa7a0f6b138ff6de55f2017a6d2eb9e6aae291cf1800f0a62" => :yosemite
   end
 
   option :cxx11

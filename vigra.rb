@@ -1,17 +1,16 @@
 class Vigra < Formula
   desc "Image processing and analysis library"
   homepage "https://ukoethe.github.io/vigra/"
-  url "https://github.com/ukoethe/vigra/releases/download/Version-1-10-0/vigra-1.10.0-src-with-docu.tar.gz"
-  sha256 "42d4a361b0bb52fbfdae7e76000698be04dabba77be3f4248d369139fe96a099"
+  url "https://github.com/ukoethe/vigra/releases/download/Version-1-11-0/vigra-1.11.0-src.tar.gz"
+  sha256 "68617de347eae7d4700a8f66cd59ce31d6cd92ffb4a235b4df34c688673af5cb"
+  head "https://github.com/ukoethe/vigra.git"
+
   bottle do
     cellar :any
-    sha256 "f3dcc0036a4465781fc8a17c6f36ac05fac4f7962e0701d07cb34352501baa00" => :el_capitan
-    sha256 "c47771148d5ff67828e4cd2a228f3d3d9381bc99e44ced6b4c7a3bcb0fe00f2d" => :yosemite
+    sha256 "3aa7a33ae3f131a46afacb98ed935aca16a8b8d220c2aa5357f34f9c00e3ada6" => :sierra
+    sha256 "68b480cd2c1cae02beac2cb0ac66f7a06cc5d1904e2d847be8140f7af4b00031" => :el_capitan
+    sha256 "4b61b3e25a1a0d8196474e1778d3eb38df6e67f3ef363f9e21c73a5548757062" => :yosemite
   end
-
-  revision 2
-
-  head "https://github.com/ukoethe/vigra.git"
 
   option :cxx11
   option "without-test", "skip tests"

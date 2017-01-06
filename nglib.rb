@@ -6,18 +6,20 @@ class Nglib < Formula
 
   bottle do
     cellar :any
-    sha256 "fe54bd5f08cb2ad3f48a686d82fdea739fe751011eeffd5605c2d6acb4b1cf45" => :el_capitan
-    sha256 "197bc93b51a6281fd6f2c71e39d2342c64b73234e2201e2e0a12200bcf657140" => :yosemite
-    sha256 "57f3823e470984861eb3778687afcf947a54eaf597db9788d4791747ea1d9379" => :mavericks
+    rebuild 1
+    sha256 "89dcf7bde5bec5a03f8c6810cfb5848082c64f68bcdd816714f0f925b98fd3b5" => :sierra
+    sha256 "6eb7f3cf7a00c68f351816970408f780264855d7d86365a427d19c81e803d606" => :el_capitan
+    sha256 "60161c1f084017f4ff9ece29807988924137150e979f176d2ad4ebad3e0fd64c" => :yosemite
   end
 
   # These two conflict with each other, so we'll have at most one.
   depends_on "opencascade" => :optional
   depends_on "oce" => :optional
 
-  # Fixes two issues.
-  # 1) A #define PI was used rather than M_PI
-  # 2) Prevent installation of TCL scripts that aren't needed without NETGEN
+  # Patch three issues:
+  #   Makefile - remove TCL scripts that aren't reuquired without NETGEN.
+  #   configure - remove TCL libs that caused issues with ld (#3624).
+  #   Partition_Loop2d.cxx - Fix PI that was used rather than M_PI
   patch :DATA
 
   def install
@@ -88,6 +90,18 @@ class Nglib < Formula
 end
 
 __END__
+diff -ur a/configure b/configure
+--- a/configure	2014-10-07 00:04:36.000000000 +1300
++++ b/configure	2016-11-12 21:43:00.000000000 +1300
+@@ -15354,7 +15354,7 @@
+
+	OCCFLAGS="-DOCCGEOMETRY -I$occdir/inc -I/usr/include/opencascade"
+
+-	OCCLIBS="-L$occdir/lib -lTKernel -lTKGeomBase -lTKMath -lTKG2d -lTKG3d -lTKXSBase -lTKOffset -lTKFillet -lTKShHealing -lTKMesh -lTKMeshVS -lTKTopAlgo -lTKGeomAlgo -lTKBool -lTKPrim -lTKBO -lTKIGES -lTKBRep -lTKSTEPBase -lTKSTEP -lTKSTL -lTKSTEPAttr -lTKSTEP209 -lTKXDESTEP -lTKXDEIGES -lTKXCAF -lTKLCAF -lFWOSPlugin"
++	OCCLIBS="-L$occdir/lib -lFWOSPlugin"
+
+
+ #  -lTKDCAF
 diff -ur a/libsrc/occ/Partition_Loop2d.cxx b/libsrc/occ/Partition_Loop2d.cxx
 --- a/libsrc/occ/Partition_Loop2d.cxx	2016-03-16 07:44:06.000000000 -0700
 +++ b/libsrc/occ/Partition_Loop2d.cxx	2016-03-16 07:45:40.000000000 -0700

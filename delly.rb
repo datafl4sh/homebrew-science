@@ -1,18 +1,17 @@
 class Delly < Formula
   desc "Structural variant discovery by paired-end and split-read analysis"
   homepage "https://github.com/tobiasrausch/delly"
-  url "https://github.com/tobiasrausch/delly/archive/v0.7.5.tar.gz"
-  sha256 "14daf744e7179b2781cbb88b26f674d1221c0093fec6d33c13a6d2863577598a"
-  revision 1
+  url "https://github.com/tobiasrausch/delly/archive/v0.7.6.tar.gz"
+  sha256 "fab273f17dacde4e15e18a187bfe47826a1b8396a8aa40b44a68c56f059f79b5"
   head "https://github.com/tobiasrausch/delly.git"
   # doi "10.1093/bioinformatics/bts378"
   # tag "bioinformatics"
 
   bottle do
-    sha256 "7ec8df14701d35965a70fc61175c499b2c9416b4660fa91b7e3cdbbd5adf9e36" => :el_capitan
-    sha256 "46cb1358b194564999dcd5b7fe737fc1702f6a61f50ff97c0912e72b33ae9c51" => :yosemite
-    sha256 "fe1f429fb01b4c48a307c5e97f6820af7f314891be59af14a8825368c8c9ac96" => :mavericks
-    sha256 "72d20aa3fa490578ba2aba23bb5d62c0abbc60735f8ef1c146b2dd40040154cf" => :x86_64_linux
+    sha256 "c6478c7dc9388998b1c5123d465e179d93f74545c63dcac2b5136a9ffe0320b2" => :sierra
+    sha256 "87fe6a00d909fc35acd6aa7aaa9b45ee17359012569a2a9fdee07faf9fc73a5e" => :el_capitan
+    sha256 "1dff37e02abeb42c449f465d24cca8629517dcc6d5284e7d5072113a30b1b970" => :yosemite
+    sha256 "3e03ea87d7069b018342c926e70e0692d0afae139c673059721ef44dd5e6c7d9" => :x86_64_linux
   end
 
   option "with-binary", "Install a statically linked binary for 64-bit Linux" if OS.linux?

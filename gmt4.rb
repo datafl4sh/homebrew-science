@@ -4,11 +4,12 @@ class Gmt4 < Formula
   url "ftp://ftp.soest.hawaii.edu/gmt/gmt-4.5.15-src.tar.bz2"
   mirror "ftp://ftp.star.nesdis.noaa.gov/pub/sod/lsa/gmt/gmt-4.5.15-src.tar.bz2"
   sha256 "f0646402858559ea07a3d51f5029a0b43e7af7547ab79c3064cce3f899ad6626"
+  revision 1
 
   bottle do
-    sha256 "d2fdb0d6e6a794688ccb021788bd3c4670a53242bf337bba69ed31708a2ac354" => :sierra
-    sha256 "95561595edb5fe2746172472dbbf28addbe4b33bec4c718da6ab5d0f785cab89" => :el_capitan
-    sha256 "7c46380cd50294f6d078af1163668928bc5c1250cc936218a4869b00f958734d" => :yosemite
+    sha256 "80d171eace2444fe46dbd43b1c57c13a24494a7724ff8d1e19a380d25289dafd" => :sierra
+    sha256 "4877dcfff9d20e30a1cedee8ee0a203c074ce18b6f5ce7da327502791fe1fdec" => :el_capitan
+    sha256 "02902314093abd2bd3fec37cc3b0b2fba23908852bfa84fd005bf4188240940b" => :yosemite
   end
 
   depends_on "gdal"

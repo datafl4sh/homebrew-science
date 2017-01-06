@@ -3,21 +3,22 @@ class Tophat < Formula
   homepage "http://ccb.jhu.edu/software/tophat"
   url "http://ccb.jhu.edu/software/tophat/downloads/tophat-2.1.1.tar.gz"
   sha256 "37840b96f3219630082b15642c47f5ef95d14f6ee99c06a369b08b3d05684da5"
+  revision 2
   # doi "10.1093/bioinformatics/btp120"
   # tag "bioinformatics"
-  revision 1
 
   bottle do
     cellar :any
-    sha256 "7c8cd03f1b5429a9458f23c3e89c1ca70a3bb66f86ea99830da78f6ca7df3060" => :el_capitan
-    sha256 "9018f5952a79235bd3955522ac46ab0e94cbd489ec802f9295c24bd85ab204dd" => :yosemite
-    sha256 "acd66232b41070f1fd1d5901a63f7306cbdb7793a7036c67b31a887c5be019dd" => :mavericks
-    sha256 "a4aaf9f979f98b0c6e07cbf9eec6b334da8a08fb31e42170e6a5b46623300f1c" => :x86_64_linux
+    sha256 "d20f7ec73044caff50a40b9c1e072f66374f639e507d46b4d7947e04693e0d01" => :sierra
+    sha256 "d2d799921c520ce8e5a1a14e715d5076cc7ff2b5f5484f8086b17cc80080de11" => :el_capitan
+    sha256 "ec072c59e6435f6db7081e86ffdf24fc1b2a66f056d901f29bd04d9643c33029" => :yosemite
+    sha256 "81f1f3efd37b268d772476109019b283bccd5768b2143dd425658b6bd3c3c6c8" => :x86_64_linux
   end
 
   depends_on "boost"
   depends_on "bowtie2"
   depends_on "bowtie" => :optional
+  depends_on :python if MacOS.version <= :snow_leopard
 
   patch :p0, :DATA
 
@@ -63,3 +64,53 @@ __END__
  	{																	\
  		type_t *i, *j, swap_tmp;										\
  		for (i = s + 1; i < t; ++i)										\
+--- src/tophat.py       2016-02-15 11:30:16.619093000 -0800
++++ src/tophat.py       2016-07-17 09:40:08.041311408 -0700
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python2.7
+
+ # encoding: utf-8
+ """
+--- src/tophat2.sh      2016-02-23 18:51:33.274718000 -0800
++++ src/tophat2.sh        2016-07-17 09:40:56.017800465 -0700
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env bash
+ pbin=""
+-fl=$(readlink $0)
++fl=$(readlink -f $0)
+ if [[ -z "$fl" ]]; then
+    pbin=$(dirname $0)
+  else
+--- src/bed_to_juncs        2016-02-14 10:21:17.133079000 -0800
++++ src/bed_to_juncs  2016-07-17 09:53:12.097361445 -0700
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python2.7
+ # encoding: utf-8
+ """
+ bed_to_juncs.py
+--- src/contig_to_chr_coords        2016-02-14 10:21:17.199079000 -0800
++++ src/contig_to_chr_coords  2016-07-17 09:53:12.105361528 -0700
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python2.7
+ # encoding: utf-8
+ """
+ contig_to_chr_coords.py
+--- src/sra_to_solid        2016-02-14 10:21:17.802079000 -0800
++++ src/sra_to_solid  2016-07-17 09:53:12.109361569 -0700
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python2.7
+
+ """
+ sra_to_solid.py
+--- src/tophat-fusion-post  2016-02-23 13:20:44.317710000 -0800
++++ src/tophat-fusion-post    2016-07-17 09:53:12.113361611 -0700
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python2.7
+
+
+ """

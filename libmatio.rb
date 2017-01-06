@@ -1,14 +1,14 @@
 class Libmatio < Formula
   desc "C library for reading and writing MATLAB MAT files"
   homepage "http://matio.sourceforge.net"
-  url "https://downloads.sourceforge.net/project/matio/matio/1.5.8/matio-1.5.8.tar.gz"
-  sha256 "6e49353d1d9d5127696f2e67b46cf9a1dc639663283c9bc4ce5280489c03e1f0"
+  url "https://downloads.sourceforge.net/project/matio/matio/1.5.9/matio-1.5.9.tar.gz"
+  sha256 "beb7f965831ec5b4ef43f8830ee1ef1c121cd98e11b0f6e1d98713d9f860c05c"
 
   bottle do
     cellar :any
-    sha256 "c063177a44ec8ee57ae6b8dc32aa7acb863b1587d5474899c4258980aba3c5e8" => :el_capitan
-    sha256 "ffd0f3dc499b02b8970f87447621d0b1e68a8984116cb31069abbc70e697f4ce" => :yosemite
-    sha256 "93d19eb63acb97f6ade5a01556e26032680a2931154b73512ef2b132b9cd49ec" => :mavericks
+    sha256 "ab1aa055754832ce6f463b2b124fe3abc136eca2d7f64cc48ef1ae5f44c7fc56" => :sierra
+    sha256 "1a81abaf92d0376ec33b5d2aa42a863e7fb5d265eb832f30153f0175f59274f4" => :el_capitan
+    sha256 "278c2144cc32fe4e93363d500f80fc427d24a7162c6320cf1774450d66b8a6af" => :yosemite
   end
 
   option :universal

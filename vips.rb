@@ -1,13 +1,14 @@
 class Vips < Formula
   desc "Image processing library"
   homepage "http://www.vips.ecs.soton.ac.uk/"
-  url "http://www.vips.ecs.soton.ac.uk/supported/8.4/vips-8.4.2.tar.gz"
-  sha256 "3aa197f9f0a08801f076c808cb3b3c24b6065a2ed1d648c640c8c2853682b243"
+  url "http://www.vips.ecs.soton.ac.uk/supported/current/vips-8.4.5.tar.gz"
+  sha256 "0af73a51f53250ca240a683ba0d652003744382b78d8a10152c8f1bd019897fd"
 
   bottle do
-    sha256 "7d750eda41aa756840ca896711ce4443c2915b432e19ce2890382c572882b597" => :sierra
-    sha256 "20cab83f049dc85febb23b7e88a55887324b060dc4dc50f9434ea4beda3e847a" => :el_capitan
-    sha256 "584676686f294826f82f7271c86f36dc87adfaffaa68dadb91a7bd8bf5cb49d7" => :yosemite
+    sha256 "efb352552111d240990d7863242cb9999ef215452690e5047dd36f6fc915461f" => :sierra
+    sha256 "a975eaec8b5af0d0a52f8814df443405ffa930bb0254d0b297110c0f78b7e633" => :el_capitan
+    sha256 "c352ab87d0c35da9aba77d0a8a40dc15197c48992cebf8dc16fea2946978d8e9" => :yosemite
+    sha256 "ab70e9f07c3bcf62693fc9ccb8fe5d49ea023e4021526e21c4e9a7fa4d593307" => :x86_64_linux
   end
 
   option "without-test", "Disable build time checks (not recommended)"

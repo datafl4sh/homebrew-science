@@ -1,15 +1,17 @@
 class Cmor < Formula
   desc "Climate Model Output Rewriter for producing CF-compliant netCDF files"
   homepage "http://www2-pcmdi.llnl.gov/cmor"
-  url "https://github.com/PCMDI/cmor/archive/3.1.2.tar.gz"
-  sha256 "ee58b6d405f081e4e0633af931b7992f1a570953b71ece17c01ab9e15889211a"
+  url "https://github.com/PCMDI/cmor/archive/3.2.1.tar.gz"
+  sha256 "4838a695be1830a10f7e01bb1b4142fd151f28e0e417d4470aa49b821e3b31a8"
   # doi "10.5281/zenodo.61943"
 
   bottle do
-    sha256 "652cc1010791eccbc52907c809033ed5ed30e7a3c82aaf29b3dce38ddfad3782" => :el_capitan
-    sha256 "d01148d52e2f26a1eccf46d1351bf1131434ba488f533858c8401ee6ad9e0898" => :yosemite
-    sha256 "8548ba7e8ce1933abcb59b9dcaf3305842ecf2d5f1cdcbfda14a28809e2a5617" => :mavericks
+    sha256 "2d6879223f7e31dad0a9b0bc149ff4e518bfca45ec36a04146336e4b857569de" => :sierra
+    sha256 "a836f017e61c6671b915f6f899678a95146354dea9de47b414916506edf8501c" => :el_capitan
+    sha256 "5cd3c325f35380846f7fba15daab71915e6b0c8da332655af8709856c7ecf5b7" => :yosemite
   end
+
+  keg_only "Conflicts with json-c in main repository."
 
   depends_on "ossp-uuid"
   depends_on "udunits"

@@ -2,12 +2,13 @@ class EnblendEnfuse < Formula
   homepage "http://enblend.sourceforge.net/"
   url "https://downloads.sourceforge.net/project/enblend/enblend-enfuse/enblend-enfuse-4.1/enblend-enfuse-4.1.1.tar.gz"
   sha256 "9d0947633ebaa0dc1211331b31009408de6fe2108751ad4190760e3a9f181bc9"
-  revision 1
+  revision 3
 
   bottle do
     cellar :any
-    sha256 "770c42f2b61395ecf25222c4f4adac3ac1a4c7270563ee6e02e870094b6c33e5" => :el_capitan
-    sha256 "c887a8481687e39410d81194986cb2492dcbbf2652ed9ff69ab9955a4ee1cbf6" => :yosemite
+    sha256 "4a1697626d7ebf3d9aa825cf7241f6e67afebd6e237e96c86af120f6328938e8" => :sierra
+    sha256 "33f37ef6624d151a0973ed4cde1a0ceb6ca7843e0cc11c79c8fee1e454417f36" => :el_capitan
+    sha256 "bd324fad78e920883871789f8db41688dbef02f283eed4e25d02841f5fea5435" => :yosemite
   end
 
   option "with-gpu", "Build with GPU support"

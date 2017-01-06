@@ -1,14 +1,16 @@
 class GraphTool < Formula
   desc "efficient network analysis"
   homepage "http://graph-tool.skewed.de/"
-  url "https://downloads.skewed.de/graph-tool/graph-tool-2.18.tar.bz2"
-  sha256 "3c4929fb7b6bae13a12115afdf8c07d6531aeeba548305376ba7b0ac710ec4d4"
-  revision 2
+
+  stable do
+    url "https://downloads.skewed.de/graph-tool/graph-tool-2.19.tar.bz2"
+    sha256 "eba1090f94b0434890beedaf0c100dd0fc77e41ebfe29b4725d76cadb82099af"
+  end
 
   bottle do
-    sha256 "3e5a3446ecfefc34742c75c0c4546a0acbb33a0a986e21df51f93651b9f0dee8" => :sierra
-    sha256 "4117ef91e3c0e172365b3e4e96e3fe6bcce9b1eea654e008d990ec9ca511fe10" => :el_capitan
-    sha256 "be2ad13e867b03a5f92ebf15f673dd1a227d7dad87753f9a5fba1574e9d50a54" => :yosemite
+    sha256 "548cec02e9b37106c208c85f16e906ce3cc60a81b47eda960eff53515140651f" => :sierra
+    sha256 "aae2cca7b0edaec413d5de47b3d4167cea96bab364da051a0d07b33ee9de3315" => :el_capitan
+    sha256 "6a434696db83d434f244e2f50606c953d60af4a8c4a2ea7c741fb20765397a7f" => :yosemite
   end
 
   head do
@@ -24,9 +26,11 @@ class GraphTool < Formula
   option "without-numpy", "Use a numpy you've installed yourself instead of a Homebrew-packaged numpy"
   option "without-python", "Build without python2 support"
   option "without-scipy", "Use a scipy you've installed yourself instead of a Homebrew-packaged scipy"
-  option "with-openmp", "Enable parallel algorithms with OpenMP (requires GCC or clang >= 3.8)"
+  option "with-openmp", "Enable OpenMP multithreading"
 
   cxx11 = MacOS.version < :mavericks ? ["c++11"] : []
+
+  depends_on :python3 => :optional
   with_pythons = build.with?("python3") ? ["with-python3"] : []
 
   depends_on "pkg-config" => :build
@@ -36,7 +40,6 @@ class GraphTool < Formula
   depends_on "cgal" => cxx11
   depends_on "google-sparsehash" => cxx11 + [:recommended]
   depends_on "gtk+3" => :recommended
-  depends_on :python3 => :optional
 
   depends_on "homebrew/python/numpy" => [:recommended] + with_pythons
   depends_on "homebrew/python/scipy" => [:recommended] + with_pythons
@@ -74,12 +77,7 @@ class GraphTool < Formula
     end
   end
 
-  # Fix compilation problem with newer CGAL
-  # Remove at next release
-  patch do
-    url "https://aur.archlinux.org/cgit/aur.git/plain/0001-Fix-compilation-problem-with-newer-CGAL.patch?h=python-graph-tool"
-    sha256 "6d325261f5e592c45c8eafb5c0b82d28e16fe4a11335d2c0c49f8e3439007f09"
-  end
+  needs :openmp if build.with? "openmp"
 
   def install
     if MacOS.version == :mavericks && (Tab.for_name("boost").stdlib == "libcxx" || Tab.for_name("boost-python").stdlib == "libcxx")

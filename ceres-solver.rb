@@ -1,17 +1,20 @@
 class CeresSolver < Formula
   desc "C++ library for large-scale optimization"
   homepage "http://ceres-solver.org/"
-  url "http://ceres-solver.org/ceres-solver-1.11.0.tar.gz"
-  sha256 "4d666cc33296b4c5cd77bad18ffc487b3223d4bbb7d1dfb342ed9a87dc9af844"
-  revision 3
-
-  head "https://ceres-solver.googlesource.com/ceres-solver.git"
+  url "http://ceres-solver.org/ceres-solver-1.12.0.tar.gz"
+  sha256 "745bfed55111e086954126b748eb9efe20e30be5b825c6dec3c525cf20afc895"
 
   bottle do
     cellar :any
-    sha256 "e50faf144f225f9a92449a3a3786010bc5738cdae984db786d478e6f3d74cb1a" => :el_capitan
-    sha256 "3f73e43083400efe8bf5b0fddd2124d4a1b25a9d0b7aa7e218d45fdb7915b315" => :yosemite
-    sha256 "6d8828601c655e452a438defa67bee0462ac415ee4240072291f1e6bc7262390" => :mavericks
+    sha256 "0e96f6218a5ef289def2b4b60a4bdaa2d0f100be3c2dcb59a10c2b65b172e1e6" => :sierra
+    sha256 "13bb08cd1aea7a3f910c89e2405c5181da89a5ecc790b503be307ac21183d686" => :el_capitan
+    sha256 "97188d56181edfeaa1cb0ab3a1b5e24f5307d69108563b6f44d00808e5223a6a" => :yosemite
+  end
+
+  head do
+    url "https://ceres-solver.googlesource.com/ceres-solver.git"
+
+    depends_on "sphinx-doc" => :build
   end
 
   option "without-test", "Do not build and run the tests (not recommended)."
@@ -22,21 +25,29 @@ class CeresSolver < Formula
   depends_on "gflags"
   depends_on "eigen"
   depends_on "suite-sparse" => :recommended
-
-  def suite_sparse_options
-    Tab.for_formula(Formula["suite-sparse"])
+  if build.with? "suite-sparse"
+    depends_on "metis"
+  elsif OS.linux?
+    depends_on "openblas" => :recommended
   end
 
   def install
-    cmake_args = std_cmake_args + ["-DBUILD_SHARED_LIBS=ON"]
-    cmake_args << "-DMETIS_LIBRARY=#{Formula["metis4"].opt_lib}/libmetis.dylib" if suite_sparse_options.with? "metis4"
-    cmake_args << "-DEIGEN_INCLUDE_DIR=#{Formula["eigen"].opt_include}/eigen3"
+    so = OS.mac? ? "dylib" : "so"
+    cmake_args = std_cmake_args + %W[
+      -DBUILD_SHARED_LIBS=ON
+      -DEIGEN_INCLUDE_DIR=#{Formula["eigen"].opt_include}/eigen3
+    ]
+    if build.with? "suite-sparse"
+      cmake_args << "-DMETIS_LIBRARY=#{Formula["metis"].opt_lib}/libmetis.#{so}"
+    else
+      cmake_args << "-DSUITESPARSE=OFF"
+    end
+    cmake_args << "-DBUILD_DOCUMENTATION=ON" if build.head?
     system "cmake", ".", *cmake_args
     system "make"
     system "make", "test" if build.with? "test"
     system "make", "install"
-    pkgshare.install "examples"
-    pkgshare.install "data"
+    pkgshare.install "examples", "data"
     doc.install "docs/html"
   end
 

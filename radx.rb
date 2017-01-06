@@ -4,12 +4,14 @@ class Radx < Formula
   url "https://www.eol.ucar.edu/system/files/software/radx/all-oss/radx-20160809.src_.tgz"
   version "20160809"
   sha256 "a071146df16b8abf926d35be4bc7d06b9204feeba8bbc8772858a7805bc5b92a"
+  revision 2
 
   bottle do
     cellar :any
-    sha256 "a2a6404e674bd9418928f83dd7e8f59c9ae40a2fffec482bb1827ec148a6b8c1" => :sierra
-    sha256 "5b86c9a1eac87b9510696258ba6f326227b0524b71abeb67b59474326bfeee41" => :el_capitan
-    sha256 "975fe58f86427c5519a8eb1d9d7db2ee6c8d524917d39ab312b3f447382ed52a" => :yosemite
+    sha256 "4b46d8576a9f3dffd1cfb25ad236db996290a62ec19ad41b06562638031c58b1" => :sierra
+    sha256 "2818bc7758febf6ae381077ff21c3ea7cbafaa4a835aca6440dbad3a7476d686" => :el_capitan
+    sha256 "321a724468daf88007486b781445771d0e413f617ff40ef6eb6b85d849baf63c" => :yosemite
+    sha256 "9aa201c5d1d02874841a78662c0f02bc674420b1e326535750a2902ff5ccd41a" => :x86_64_linux
   end
 
   depends_on "hdf5"

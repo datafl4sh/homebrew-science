@@ -3,12 +3,12 @@ class Gnudatalanguage < Formula
   homepage "http://gnudatalanguage.sourceforge.net"
   url "https://downloads.sourceforge.net/project/gnudatalanguage/gdl/0.9.5/gdl-0.9.5.tar.gz"
   sha256 "cc9635e836b5ea456cad93f8a07d589aed8649668fbd14c4aad22091991137e2"
-  revision 5
+  revision 7
 
   bottle do
-    sha256 "278a75fa3d3714badaf45dc4a369be777e2428373ad38b549095fed23d17832c" => :sierra
-    sha256 "df74f121cddf66d954e3dd839996e0c0c891121d2f03beb16936219e3114b5dc" => :el_capitan
-    sha256 "6256c4b6353acc4a18031cba64402cfbc7cff79af65fd8fafb03bbbd96dac052" => :yosemite
+    sha256 "8ae1f4c42b5267ca61719291a4240252f3a09083678ddca1189deca30c6e0432" => :sierra
+    sha256 "06a4cb4d184990426254780fe6584c806fe222f6a85362eff0cb4395b73a2f4f" => :el_capitan
+    sha256 "3393242c478c5f1928c7557ac092a4a1c143fc2ccca04dc8639d5a8bf74ed5f3" => :yosemite
   end
 
   depends_on "cmake" => :build
@@ -41,6 +41,8 @@ class Gnudatalanguage < Formula
     sha256 "937e82f6052aa72576df49046aa57d03593c7ba21d074f2455cd614318b881dd"
   end
 
+  patch :DATA if build.with? "hdf4"
+
   def install
     args = std_cmake_args
     args << "-DHDF=OFF" if build.without?("hdf4")
@@ -57,3 +59,20 @@ class Gnudatalanguage < Formula
     system "#{bin}/gdl", "--version"
   end
 end
+
+__END__
+diff --git a/src/GDLTokenTypes.hpp b/src/GDLTokenTypes.hpp
+index 06b9316..a91f226 100644
+--- a/src/GDLTokenTypes.hpp
++++ b/src/GDLTokenTypes.hpp
+@@ -10,6 +10,10 @@
+ #ifdef __cplusplus
+ struct CUSTOM_API GDLTokenTypes {
+ #endif
++
++#ifdef NOP
++#undef NOP
++#endif
+	enum {
+		EOF_ = 1,
+		ALL = 4,

@@ -1,17 +1,17 @@
 class Vtk < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization."
   homepage "http://www.vtk.org"
-  url "http://www.vtk.org/files/release/7.0/VTK-7.0.0.tar.gz"
-  mirror "https://fossies.org/linux/misc/VTK-7.0.0.tar.gz"
-  sha256 "78a990a15ead79cdc752e86b83cfab7dbf5b7ef51ba409db02570dbdd9ec32c3"
-  revision 5
+  url "http://www.vtk.org/files/release/7.1/VTK-7.1.0.tar.gz"
+  mirror "https://fossies.org/linux/misc/VTK-7.1.0.tar.gz"
+  sha256 "5f3ea001204d4f714be972a810a62c0f2277fbb9d8d2f8df39562988ca37497a"
+  revision 1
 
   head "https://github.com/Kitware/VTK.git"
 
   bottle do
-    sha256 "a6a1badd1dcc813134583cbca8105378365022cd94c233423dd2f37098186463" => :sierra
-    sha256 "51d431c41aa77d2fc42b2418abff650bea49e3265fd904fe116780497f1cef54" => :el_capitan
-    sha256 "e1b0fb9169574bd321dfe67f19f25f5d7f9357ad08410a6356c9707e8335accd" => :yosemite
+    sha256 "ea7e0d67acaeae418f5a523f87e34a4a3e7765739811f655b50277b48664472a" => :sierra
+    sha256 "30afadc288f71f1fbdd12097c7f1cb584945157052e286f1b3c1a088cab550af" => :el_capitan
+    sha256 "7fcddb90cf72a5e83f94a6248dd72387e1cc20b2beb9c880b484dd8545b54fc1" => :yosemite
   end
 
   deprecated_option "examples" => "with-examples"
@@ -29,7 +29,6 @@ class Vtk < Formula
 
   depends_on "cmake" => :build
   depends_on :x11 => :optional
-  depends_on "qt" => :optional
   depends_on "qt5" => :optional
 
   depends_on :python => :recommended if MacOS.version <= :snow_leopard
@@ -44,21 +43,11 @@ class Vtk < Formula
   depends_on "matplotlib" => :python if build.with?("matplotlib") && build.with?("python")
 
   # If --with-qt and --with-python, then we automatically use PyQt, too!
-  if build.with? "python"
-    if build.with? "qt"
-      depends_on "sip"
-      depends_on "pyqt"
-    elsif build.with? "qt5"
+  if build.with? "qt5"
+    if build.with? "python"
       depends_on "sip"
       depends_on "pyqt5" => ["with-python", "without-python3"]
-    end
-  end
-
-  if build.with? "python3"
-    if build.with? "qt"
-      depends_on "sip" => ["with-python3", "without-python"]
-      depends_on "pyqt" => ["with-python3", "without-python"]
-    elsif build.with? "qt5"
+    elsif build.with? "python3"
       depends_on "sip"   => ["with-python3", "without-python"]
       depends_on "pyqt5"
     end
@@ -83,8 +72,8 @@ class Vtk < Formula
       args << "-DBUILD_TESTING=OFF"
     end
 
-    if build.with?("qt") || build.with?("qt5") || build.with?("qt-extern")
-      args << "-DVTK_QT_VERSION:STRING=5" if build.with? "qt5"
+    if build.with?("qt5")
+      args << "-DVTK_QT_VERSION:STRING=5"
       args << "-DVTK_Group_Qt=ON"
     end
 
@@ -94,6 +83,9 @@ class Vtk < Formula
     if build.with? "x11"
       args << "-DVTK_USE_COCOA=OFF"
       args << "-DVTK_USE_X=ON"
+      args << "-DOPENGL_INCLUDE_DIR:PATH=/usr/X11R6/include"
+      args << "-DOPENGL_gl_LIBRARY:STRING=/usr/X11R6/lib/libGL.dylib"
+      args << "-DOPENGL_glu_LIBRARY:STRING=/usr/X11R6/lib/libGLU.dylib"
     else
       args << "-DVTK_USE_COCOA=ON"
     end
@@ -144,10 +136,9 @@ class Vtk < Formula
         args << "-DVTK_INSTALL_PYTHON_MODULE_DIR='#{py_site_packages}/'"
       end
 
-      if build.with?("qt") || build.with?("qt5")
+      if build.with?("qt5")
         args << "-DVTK_WRAP_PYTHON_SIP=ON"
-        args << "-DSIP_PYQT_DIR='#{Formula["pyqt"].opt_share}/sip'" if build.with? "qt"
-        args << "-DSIP_PYQT_DIR='#{Formula["pyqt5"].opt_share}/sip'" if build.with? "qt5"
+        args << "-DSIP_PYQT_DIR='#{Formula["pyqt5"].opt_share}/sip'"
       end
 
       args << ".."
@@ -201,10 +192,10 @@ class Vtk < Formula
   def caveats
     s = ""
     s += <<-EOS.undent
-        Even without the --with-qt option, you can display native VTK render windows
+        Even without the --with-qt5 option, you can display native VTK render windows
         from python. Alternatively, you can integrate the RenderWindowInteractor
-        in PyQt, PySide, Tk or Wx at runtime. Read more:
-            import vtk.qt4; help(vtk.qt4) or import vtk.wx; help(vtk.wx)
+        in PyQt4, Tk or Wx at runtime. Read more:
+            import vtk.qt5; help(vtk.qt5) or import vtk.wx; help(vtk.wx)
     EOS
 
     if build.with? "examples"
@@ -233,12 +224,12 @@ class Vtk < Formula
         int main(int, char *[])
         {
           assert (vtkVersion::GetVTKMajorVersion()==7);
-          assert (vtkVersion::GetVTKMinorVersion()==0);
+          assert (vtkVersion::GetVTKMinorVersion()==1);
           return EXIT_SUCCESS;
         }
       EOS
 
-    system ENV.cxx, "Version.cpp", "-I#{opt_include}/vtk-7.0"
+    system ENV.cxx, "Version.cpp", "-I#{opt_include}/vtk-7.1"
     system "./a.out"
     system "#{bin}/vtkpython", "-c", "exit()"
   end

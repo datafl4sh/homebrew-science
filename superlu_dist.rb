@@ -6,9 +6,10 @@ class SuperluDist < Formula
   revision 1
 
   bottle do
-    sha256 "832ef134b3f34d13f990ab01cd09042f2eb7e6fa0c3c3c8dd8dcd7eb0dd19109" => :el_capitan
-    sha256 "77863960780d6b70ee0020cbf351c04f57390411f73d388852e0a6795412269e" => :yosemite
-    sha256 "56acc4159cf7b0f16dee6705e4308935280daa2a287514d37c631d4a878bdbab" => :mavericks
+    rebuild 1
+    sha256 "2c6577bcf69fdc17fce4cd136773a34527f0bbb9f149090c5cfd3cd769b634d4" => :sierra
+    sha256 "1a97d5838c71422d1a4545684c1a6e6accf0306924bf32ae7045425cd34d715d" => :el_capitan
+    sha256 "82c1a6f39857a82cd568b4d818d2596d4355298fddf61456e24b261eb7717a2f" => :yosemite
   end
 
   option "without-test", "skip build-time tests (not recommended)"
@@ -27,8 +28,10 @@ class SuperluDist < Formula
     # prevent linking errors on linuxbrew:
     ENV.deparallelize
 
+    dylib_ext = OS.mac? ? "dylib" : "so"
+
     cmake_args = std_cmake_args
-    cmake_args << "-DTPL_PARMETIS_LIBRARIES=#{Formula["parmetis"].opt_lib}/libparmetis.dylib;#{Formula["metis"].opt_lib}/libmetis.dylib"
+    cmake_args << "-DTPL_PARMETIS_LIBRARIES=#{Formula["parmetis"].opt_lib}/libparmetis.#{dylib_ext};#{Formula["metis"].opt_lib}/libmetis.#{dylib_ext}"
     cmake_args << "-DTPL_PARMETIS_INCLUDE_DIRS=#{Formula["parmetis"].opt_include};#{Formula["metis"].opt_include}"
     cmake_args << "-DCMAKE_C_FLAGS=-fPIC -O2"
     cmake_args << "-DBUILD_SHARED_LIBS=ON"

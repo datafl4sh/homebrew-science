@@ -1,59 +1,48 @@
 language: ruby
-matrix:
-  include:
-    - env: OSX=10.11
-      os: osx
-      osx_image: xcode8
-      rvm: system
-    - os: linux
-      rvm: system
-      services: docker
-      sudo: required
-  allow_failures:
-    - os: linux
+os: linux
+rvm: 2.0.0
+sudo: required
+dist: trusty
+
+addons:
+  apt_packages:
+    - csh
+    - cython
+    - python-astropy
+    - python-matplotlib
+    - python-nose
+    - python-pip
+    - python-scipy
+    - python-sphinx
 
 before_install:
+  - export TRAVIS_COMMIT="$(git rev-parse --verify -q HEAD)"
   - if [ -f ".git/shallow" ]; then
       travis_retry git fetch --unshallow;
     fi
-  - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
-      sudo chown -R "$USER" "$(brew --repo)";
-      git -C "$(brew --repo)" reset --hard origin/master;
-      git -C "$(brew --repo)" clean -qxdff;
-      brew update || brew update;
-      brew tap homebrew/python homebrew/x11 homebrew/dupes homebrew/versions;
-      mkdir -p "$(brew --repo)/Library/Taps/homebrew";
-      ln -s "$TRAVIS_BUILD_DIR" "$(brew --repo)/Library/Taps/homebrew/homebrew-science";
-      cd "$(brew --repo)/Library/Taps/homebrew/homebrew-science";
-      export TRAVIS_BUILD_DIR="$(brew --repo)/Library/Taps/homebrew/homebrew-science";
-    fi
-  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
-      docker pull linuxbrew/linuxbrew;
-      docker run
-        -v $(pwd):/home/linuxbrew/homebrew-science
-        linuxbrew/linuxbrew
-        /bin/sh -c 'brew tap homebrew/python homebrew/x11 homebrew/dupes homebrew/versions && brew update && cp -rf ~/homebrew-science $(brew --repo)/Library/Taps/homebrew/homebrew-science';
-      docker commit $(docker ps -l -q) linuxbrew;
-    fi
+  - sudo mkdir -p /home/linuxbrew
+  - sudo chown "$USER" /home/linuxbrew
+  - LINUXBREW=/home/linuxbrew/.linuxbrew
+  - git clone --depth=1 https://github.com/Linuxbrew/brew.git "$LINUXBREW"
+  - export PATH="$LINUXBREW/bin:$PATH"
+  - HOMEBREW_TAP_DIR="$(brew --repo "$TRAVIS_REPO_SLUG")"
+  - rm -rf "$HOMEBREW_TAP_DIR"
+  - mkdir -p "$(dirname "$HOMEBREW_TAP_DIR")"
+  - ln -s "$PWD" "$HOMEBREW_TAP_DIR"
+  - export HOMEBREW_DEVELOPER="1"
   - env | grep TRAVIS | tee /tmp/travis.env
-
-install:
   - export HOMEBREW_DEVELOPER="1"
   - ulimit -n 1024
+  # Fix incorrect file permissions (664)
+  - chmod 0644 *.rb
+  - umask 022
+  - brew tap linuxbrew/xorg
+
+install:
+  - pip install pysam
 
 script:
-  - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
-      brew test-bot --tap=homebrew/science;
-    else
-      docker run
-        -w /home/linuxbrew/.linuxbrew/Library/Taps/homebrew/homebrew-science
-        --env-file /tmp/travis.env
-        -e HOMEBREW_DEVELOPER=1
-        -e HOMEBREW_NO_AUTO_UPDATE=1
-        -t
-        linuxbrew
-        brew test-bot --tap=homebrew/science;
-    fi
+  - brew test-bot
 
 notifications:
   email:

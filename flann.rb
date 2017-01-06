@@ -3,13 +3,14 @@ class Flann < Formula
   homepage "http://www.cs.ubc.ca/~mariusm/index.php/FLANN/FLANN"
   url "https://github.com/mariusmuja/flann/archive/1.9.1.tar.gz"
   sha256 "b23b5f4e71139faa3bcb39e6bbcc76967fbaf308c4ee9d4f5bfbeceaa76cc5d3"
-  revision 1
+  revision 2
 
   bottle do
     cellar :any
-    sha256 "28b3f85c2ebb0d52a69c2664b39ac73f7793dacc24ab89113db7ec2860e26224" => :el_capitan
-    sha256 "071079e66e65e86a2309841462539fe1902b3fec51d6a00edfb99fab6b594f59" => :yosemite
-    sha256 "98bcad5710284bdf00ad4c4def62fc39524fc3064b91b39bb289de4f0b44f9f4" => :mavericks
+    sha256 "43b078abc69b5a504a4b363096873a74a739fbde53770ee4375262a874dd4603" => :sierra
+    sha256 "7ed4462ab4e5d934e4215676737059b827332dca97102ff2337074de07aa1435" => :el_capitan
+    sha256 "009143678d2a847c34fce8d77d3abf3e7aa80b05dffbae71d649beacca412a0d" => :yosemite
+    sha256 "68c5f1861d2771e71df196a18a10584af2a852889e84cb786cd2d18e06e44b79" => :x86_64_linux
   end
 
   deprecated_option "enable-matlab" => "with-octave"
@@ -44,6 +45,8 @@ class Flann < Formula
       curl "-O", "http://people.cs.ubc.ca/~mariusm/uploads/FLANN/datasets/dataset.dat"
       curl "-O", "http://people.cs.ubc.ca/~mariusm/uploads/FLANN/datasets/testset.dat"
       system "#{bin}/flann_example_c"
+      curl "-O", "http://people.cs.ubc.ca/~mariusm/uploads/FLANN/datasets/dataset.hdf5"
+      system "#{bin}/flann_example_cpp"
     end
   end
 end

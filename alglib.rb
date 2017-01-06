@@ -1,11 +1,18 @@
 class Alglib < Formula
   desc "Cross-platform numerical analysis library"
   homepage "http://www.alglib.net"
-  url "http://alglib.net/translator/re/alglib-2.6.0.cpp.zip"
-  version "2.6.0"
-  sha256 "63bd26576ea579c48b08b4bc1cd42615d93e43ac580d0961aa81613dfd6b5e36"
+  url "http://www.alglib.net/translator/re/alglib-3.10.0.cpp.gpl.tgz"
+  version "3.10.0"
+  sha256 "26a6aa966da5bba01da1bebddc0acb0a8fc579f07d53a2cbcfa5dfcaf612aaeb"
 
-  depends_on "qt"
+  bottle do
+    cellar :any
+    sha256 "8e598ccbc0a92205ce55a079e9d0ff6a120675c3350ca6673aae7f5e9d9b48a3" => :sierra
+    sha256 "8e598ccbc0a92205ce55a079e9d0ff6a120675c3350ca6673aae7f5e9d9b48a3" => :el_capitan
+    sha256 "f0a4fd70b961c25d781f7a2dc9c25980a53a680db5074577c6ffea6fb4665d46" => :yosemite
+  end
+
+  depends_on "qt5"
   depends_on "pkg-config" => :build
 
   def install
@@ -23,7 +30,7 @@ class Alglib < Formula
       QT      -= gui core
       LIBS    -= -lQtGui -lQtCore
       TARGET       = alglib
-      VERSION      = 2.6.0
+      VERSION      = 3.10.0
       TEMPLATE     = lib
       target.path = $$PREFIX/lib
       DEPENDPATH += .
@@ -53,10 +60,10 @@ class Alglib < Formula
       #include <stdlib.h>
       #include <stdio.h>
       #include <time.h>
-      #include "mlpbase.h"
+      #include "dataanalysis.h"
       int main(int argc, char **argv)
       {
-          multilayerperceptron net;
+          alglib::multilayerperceptron net;
           mlpcreate0(2, 1, net);
           mlprandomize(net);
           return 0;

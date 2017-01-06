@@ -1,44 +1,25 @@
 class Libbi < Formula
   desc "Bayesian state-space modelling on parallel computer hardware"
   homepage "http://libbi.org"
-
-  patch do
-    # patch for thrust to work in case CUDA is not installed
-    url "https://github.com/libbi/LibBi/pull/8.diff"
-    sha256 "cd3aec69ec9aa05fc5ed1d9ccaead9494f9ce4d580577c51b3e8acb63273663b"
-  end
+  head "https://github.com/libbi/LibBi.git"
 
   stable do
-    url "https://github.com/libbi/LibBi/archive/1.2.0.tar.gz"
-    sha256 "57566aff0b752dd55356c21b818295e3a54ad893bc6aff97d267ff7bcf2d0b68"
+    url "https://github.com/libbi/LibBi/archive/1.3.0.tar.gz"
+    sha256 "0dd313dd71e72b2f16ca9074800fc2fa8bf585bec3b87a750ff27e467a9826d0"
 
-    patch do
-      # fix to work if CUDA_ROOT is not set
-      url "https://github.com/sbfnk/LibBi/commit/f8d31b6a7c5d3534cf3c6ff99631e2d484bcd2ff.diff"
-      sha256 "5cb89fbe1d6e522e7d27cc1de14f2f25675bdd4cf47bfa3180656dc63230dc0d"
+    if build.without? "openmp"
+      patch do
+        # disable OpenMP if it is not used
+        url "https://github.com/sbfnk/LibBi/commit/df6fbc815cc4c2c52f9a6bcbffc01bd82f9674fd.diff"
+        sha256 "7c0785c5337bcdd8dac9e90e0c37b7766d579684d48abac35974fb5fde67d6b5"
+      end
     end
-
-    patch do
-      # disable OpenMP if it is not used
-      url "https://github.com/sbfnk/LibBi/commit/df6fbc815cc4c2c52f9a6bcbffc01bd82f9674fd.diff"
-      sha256 "7c0785c5337bcdd8dac9e90e0c37b7766d579684d48abac35974fb5fde67d6b5"
-    end if build.without? "openmp"
   end
   bottle do
     cellar :any
-    sha256 "6b6fcc8d95053807a1a4f084276a9896ea42faf2ddca8ab0c46a8b32394309cc" => :sierra
-    sha256 "c2f6d7c8f6d13cbcc852658285c29031b6985f7895d64882f454a413cfbdd394" => :el_capitan
-    sha256 "83ae940a4cbf044e6b87d9daf00c4e0288b43157a92f4a49319b83eab0832a88" => :yosemite
-  end
-
-  head do
-    url "https://github.com/libbi/LibBi.git"
-
-    patch do
-      # fix to work if CUDA_ROOT is not set
-      url "https://github.com/libbi/LibBi/pull/9.diff"
-      sha256 "80746f04740c0730d241418014c37857303f126cf2ed48f55b44b597386e85a2"
-    end
+    sha256 "ae98ba7d12b6927ae671e982b46c402949c4b7115769166ec9411d8220b6a4b6" => :sierra
+    sha256 "963afcda44894a6d1f35cda8e7ea9f385236e59bcce45732b4e6787ed625a6d3" => :el_capitan
+    sha256 "731a4d6072a332c8ec7ccc4fe718c2d4f51984de9ac5e54b0dbbf706a980d69e" => :yosemite
   end
 
   option "without-test", "Disable build-time checking (not recommended)"
@@ -47,11 +28,11 @@ class Libbi < Formula
   needs :openmp if build.with? "openmp"
 
   depends_on :perl => "5.10"
-  depends_on "homebrew/science/qrupdate"
-  depends_on "homebrew/science/netcdf"
+  depends_on "qrupdate"
+  depends_on "netcdf"
   depends_on "gsl"
   depends_on "boost"
-  depends_on "automake"
+  depends_on "automake" => :run
 
   resource "Getopt::ArgvFile" do
     url "http://search.cpan.org/CPAN/authors/id/J/JS/JSTENZEL/Getopt-ArgvFile-1.11.tar.gz"
@@ -121,6 +102,7 @@ class Libbi < Formula
   def install
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
     ENV.append "CPPFLAGS", "-I#{include}"
+    ENV.append "LDFLAGS", "-L#{Formula["qrupdate"].lib}"
 
     perl_resources = [] << "Getopt::ArgvFile" << "Carp::Assert" << "File::Slurp" << "Parse::Yapp" << "Parse::Template" << "Parse::Lex" << "Parse::RecDescent" << "Math::Symbolic" << "Class::Inspector" << "File::ShareDir" << "Template" << "Graph"
     include_resources = [] << "thrust"
@@ -149,7 +131,7 @@ class Libbi < Formula
     bin.install libexec/"bin/libbi"
     (libexec/"share/test").install "Test.bi", "test.conf"
     perl_dir = `dirname $(which perl)`
-    bin.env_script_all_files(libexec/"bin", :PATH => perl_dir.chomp.concat(":\$PATH"), :PERL5LIB => ENV["PERL5LIB"], :CPPFLAGS => ENV["CPPFLAGS"], :CXX => ENV["CXX"])
+    bin.env_script_all_files(libexec/"bin", :PATH => perl_dir.chomp.concat(":\$PATH"), :PERL5LIB => ENV["PERL5LIB"], :CPPFLAGS => "\$CPPFLAGS -I#{HOMEBREW_PREFIX}/include", :LDFLAGS => "\$LDFLAGS -L#{HOMEBREW_PREFIX}/lib", :CXX => ENV["CXX"])
   end
 
   def caveats; <<-EOS.undent
@@ -160,7 +142,7 @@ class Libbi < Formula
   test do
     cp Dir[libexec/"share/test/*"], testpath
     cd testpath do
-      system "libbi", "sample", "@test.conf"
+      system "#{bin}/libbi", "sample", "@test.conf"
     end
   end
 end

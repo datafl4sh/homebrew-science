@@ -6,9 +6,10 @@ class Arpack < Formula
   head "https://github.com/opencollab/arpack-ng.git"
 
   bottle do
-    sha256 "b1a37921c005836ee4977fea7b8fb3ba136393361becc220aa01b63009e19a3c" => :el_capitan
-    sha256 "2e4117baae0e916b6505ade1f858f444432c971b9c9633a8298b5b8f5359dcaf" => :yosemite
-    sha256 "e29c366b94ddd94cb086eb61c4ace0ed8be9e91bea6b50ff4ce70eaff319fa7d" => :mavericks
+    rebuild 1
+    sha256 "1dc2e654743752805c212f8c624b4392891176ff216d633daf4d44a97128a0dc" => :sierra
+    sha256 "ece580b9a167720f57d13c16fa452ff1583eda615fbcacfd25afe03c801565b5" => :el_capitan
+    sha256 "37882bb51410da6602c2660f894de3adcbf7b1c24d82b73c25aafe9a9776fbbd" => :yosemite
   end
 
   depends_on "autoconf" => :build
@@ -17,7 +18,7 @@ class Arpack < Formula
 
   depends_on :fortran
   depends_on :mpi => [:optional, :f77]
-  depends_on "openblas" => :optional
+  depends_on "openblas" => OS.mac? ? :optional : :recommended
   depends_on "veclibfort" if build.without?("openblas") && OS.mac?
 
   def install

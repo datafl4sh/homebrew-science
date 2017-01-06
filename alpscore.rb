@@ -3,13 +3,15 @@ class Alpscore < Formula
   homepage "http://alpscore.org"
   url "https://github.com/ALPSCore/ALPSCore/archive/v0.5.5.tar.gz"
   sha256 "23612813734e6bf8c3fdabd58f6d71cebbe9e9cbfec80e84880099761789dbc7"
+  revision 1
   head "https://github.com/ALPSCore/ALPSCore.git"
 
   bottle do
     cellar :any
-    sha256 "596fec4526c2da6ced5d5eea1faa258bca70babde767d229132e9a991f9de199" => :el_capitan
-    sha256 "bc752627b91140b55c3c10dc4bcb78229e651b1b068a321ed9e96b5bcc9bd6b3" => :yosemite
-    sha256 "a4760d15227341ea0ea77e2a7170ed9da50622cf87ba1acf8dbf0fa2957e7791" => :mavericks
+    sha256 "0d91e12100c714f92c69afaaf30819ee69862afb6d8506a473d189630c9b92d3" => :sierra
+    sha256 "6c5fc7d12ad345d2a01f18b397b8356815bc6113cba34aaaeb3968cb58280848" => :el_capitan
+    sha256 "bc9bf3593e05dd75964a5631aba7ef9177725129c2f19647da69efde8f851129" => :yosemite
+    sha256 "893b510b6500349c3932982a38e7d1316034278733d609940b2cda284e34e6e0" => :x86_64_linux
   end
 
   option :cxx11

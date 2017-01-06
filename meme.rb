@@ -4,15 +4,14 @@ class Meme < Formula
   # tag "bioinformatics"
   # doi "10.1093/nar/gkp335"
 
-  url "http://meme-suite.org/meme-software/4.10.1/meme_4.10.1_3.tar.gz"
-  version "4.10.1"
-  sha256 "9ccc0cfdb7d1467d5b021328fcf1407685d63fb6e65fa34b5b5929b493a35d66"
-  revision 2
+  url "http://meme-suite.org/meme-software/4.11.2/meme_4.11.2_2.tar.gz"
+  version "4.11.2.2"
+  sha256 "377238c2a9dda64e01ffae8ecdbc1492c100df9b0f84132d50c1cf2f68921b22"
 
   bottle do
-    sha256 "68ffc928fd91c265161c603799acad20bdf59e191cba44c4fee693cb060913de" => :el_capitan
-    sha256 "03738680e74d2983ca39f7c55af7ef5f0b10e150146d8eeb2298004dc3814376" => :yosemite
-    sha256 "1f7c6057fd93c90f15bd0a66a0927c06eabd94f2d288179e2ff0bf1302fb248f" => :mavericks
+    sha256 "f7f0026b72349dd004a45e2058f608ad030d35c47db166f79f0cb160b928d693" => :sierra
+    sha256 "2d77bc1f91f74773a3beb7c217a689ba0d32a0bb274eee16696855e0bb79c0e4" => :el_capitan
+    sha256 "a7f07d62585ed569e6f7c26113b7f23afe1c14ac9f3bf8397bc057fa9a8176c9" => :yosemite
   end
 
   keg_only <<-EOF.undent
@@ -32,6 +31,6 @@ class Meme < Formula
   end
 
   test do
-    system bin/"meme", doc/"tests/At.s"
+    system bin/"meme", doc/"tests/common/At.s"
   end
 end

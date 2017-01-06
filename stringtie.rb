@@ -1,8 +1,8 @@
 class Stringtie < Formula
   desc "Transcript assembly and quantification for RNA-Seq"
   homepage "http://ccb.jhu.edu/software/stringtie"
-  url "http://ccb.jhu.edu/software/stringtie/dl/stringtie-1.3.0.tar.gz"
-  sha256 "3a21c662904cdab0c749d5c3f5ef988e84fa036857ce2ca35782b3c19469c652"
+  url "http://ccb.jhu.edu/software/stringtie/dl/stringtie-1.3.1c.tar.gz"
+  sha256 "69fc957efd1832ec62640f7b4a78c052e565574f73deea93f90eb20a061f147d"
   head "https://github.com/gpertea/stringtie.git"
 
   # doi "10.1038/nbt.3122"
@@ -10,9 +10,10 @@ class Stringtie < Formula
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "788b2bcaafc940f0cdf2d0d9635d23583df503ee3ee12339b3f8fccc27657958" => :el_capitan
-    sha256 "0bfc0a7a768725ba881164e02ae92e47edaa0c723c18692d12d55b1bf2e1abe3" => :yosemite
-    sha256 "3c86dba477c09224e6e47795d97a7fda71753a7335bf87f8134bff3501179d6f" => :mavericks
+    sha256 "64591866359f9288ae75f104c70b916867df1347fd19782a4988827d890b0c4c" => :sierra
+    sha256 "acb7009fc22e8ca345d55be846bc50a64de22996cbe9f8d6ff8f4efddfb26417" => :el_capitan
+    sha256 "babd6585016cd53ddc9be7fd44f1213a3ef5221a0379717ac7988ea4086ea1b2" => :yosemite
+    sha256 "d3b47ac5e85a356649d7036e11d65cb760b6bbc640599c6a66b3b3615f8cc4a5" => :x86_64_linux
   end
 
   def install
@@ -22,6 +23,6 @@ class Stringtie < Formula
   end
 
   test do
-    assert_match "transcripts", shell_output("stringtie 2>&1", 1)
+    assert_match "transcripts", shell_output("#{bin}/stringtie 2>&1", 1)
   end
 end

@@ -2,14 +2,14 @@ class Cmdstan < Formula
   desc "Probabilistic programming for Bayesian inference"
   homepage "http://mc-stan.org/"
   # tag "math"
-  url "https://github.com/stan-dev/cmdstan/releases/download/v2.12.0/cmdstan-2.12.0.tar.gz"
-  sha256 "717fbc25fbf10db6e6315f4cdd74f38d32afaf153bbdade259bf838deb6af774"
+  url "https://github.com/stan-dev/cmdstan/releases/download/v2.14.0/cmdstan-2.14.0.tar.gz"
+  sha256 "4dfe78e4682cd84d77455b150337cc96f2c911d158085e10b8b98c802cbf90e6"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "75538df8ec99755e33b9879842de494fdecd208f18602d7c4f631240a808a43a" => :el_capitan
-    sha256 "0024521d7c3d07bde130af4020ade2ce82c762430d4e8cb1405f6fa9b87298bc" => :yosemite
-    sha256 "ee1ddf61fe69f0fce9312250883581db347ec442f2408c52ad9d9509fec1900f" => :mavericks
+    sha256 "6147aca5d02f746846628e610539b92c52fc884f55d2dff59652e572de33f541" => :sierra
+    sha256 "345273c4d9296d214b7b779dfeec351415774ad6fc43f76fc9bb781374f46e68" => :el_capitan
+    sha256 "bf4f3afa6ee2b1c01169720011b638257590e27b92e37fcd536c5dac31d2c0ed" => :yosemite
   end
 
   depends_on "boost"
@@ -72,7 +72,7 @@ class Cmdstan < Formula
     cvodes = libraries.match(%r{(lib\/cvodes_([0-9\.]+))\n})[1]
     ENV["CPPFLAGS"] = %W[-I#{prefix}/stan_#{version}/src
                          -I#{math} -I#{math}/#{cvodes}/include
-                         -I#{Formula["eigen"].include/"eigen3"}].join(" ")
+                         -I#{Formula["eigen"].opt_include/"eigen3"}].join(" ")
     system "make", "bernoulli_model.o"
   end
 end

@@ -1,16 +1,16 @@
 class Netcdf < Formula
   desc "Libraries and data formats for array-oriented scientific data"
   homepage "http://www.unidata.ucar.edu/software/netcdf"
-  url "ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4.3.3.1.tar.gz"
-  mirror "http://www.gfd-dennou.org/library/netcdf/unidata-mirror/netcdf-4.3.3.1.tar.gz"
-  sha256 "bdde3d8b0e48eed2948ead65f82c5cfb7590313bc32c4cf6c6546e4cea47ba19"
-  revision 5
+  url "ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4.4.1.1.tar.gz"
+  mirror "http://www.gfd-dennou.org/library/netcdf/unidata-mirror/netcdf-4.4.1.1.tar.gz"
+  sha256 "4d44c6f4d02a8faf10ea619bfe1ba8224cd993024f4da12988c7465f663c8cae"
 
   bottle do
     cellar :any
-    sha256 "296b07ef52da85517d59f87e0968654aef7f6ed5c082bcd10e911c17ae52da80" => :el_capitan
-    sha256 "fd7b1c3e4684d76a6b6d0e7eb65bf87e8b7de649ff924e56860a7e858ed0d73b" => :yosemite
-    sha256 "a219ba5fd0ea60622cb81b93c80a8f5840db52ed8d933a17af65689650504fcb" => :mavericks
+    sha256 "aa8b3032ef56fea5676e91716a19f8927c126f9f368b39c2dbc4a360181d880a" => :sierra
+    sha256 "550a16b02ed74661a515b2554cda2541f9a5634ee9bd88100f9c45e11bc59aa7" => :el_capitan
+    sha256 "5b9ecd71a150a1ebc645baf589a75a842ceed15993331faec06ff3bc3ee42421" => :yosemite
+    sha256 "e266ef6a5852729ef7a1aced5f8b29b6fc2ebd424810664921d0f688f4a04d49" => :x86_64_linux
   end
 
   option "without-cxx", "Don't compile C++ bindings"
@@ -26,8 +26,8 @@ class Netcdf < Formula
   depends_on "hdf5"
 
   resource "cxx" do
-    url "https://github.com/Unidata/netcdf-cxx4/archive/v4.2.1.tar.gz"
-    sha256 "bad56abfc99f321829070c04aebb377fc8942a4d09e5a3c88ad2b6547ed50ebc"
+    url "https://github.com/Unidata/netcdf-cxx4/archive/v4.3.0.tar.gz"
+    sha256 "25da1c97d7a01bc4cee34121c32909872edd38404589c0427fefa1301743f18f"
   end
 
   resource "cxx-compat" do
@@ -37,9 +37,9 @@ class Netcdf < Formula
   end
 
   resource "fortran" do
-    url "ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-fortran-4.4.2.tar.gz"
-    mirror "http://www.gfd-dennou.org/arch/netcdf/unidata-mirror/netcdf-fortran-4.4.2.tar.gz"
-    sha256 "ad6249b6062df6f62f81d1cb2a072e3a4c595f27f11fe0c5a79726d1dad3143b"
+    url "ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-fortran-4.4.4.tar.gz"
+    mirror "http://www.gfd-dennou.org/arch/netcdf/unidata-mirror/netcdf-fortran-4.4.4.tar.gz"
+    sha256 "b2d395175f8d283e68c8be516e231a96b191ade67ad0caafaf7fa01b1e6b5d75"
   end
 
   def install

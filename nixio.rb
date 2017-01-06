@@ -3,13 +3,14 @@ class Nixio < Formula
   homepage "http://www.g-node.org/nix"
   url "https://github.com/G-Node/nix/archive/1.2.0.tar.gz"
   sha256 "663da5a2b464c162979c73f28d42b08385adced70746cf78aeb1c1e26ee14272"
+  revision 2
   head "https://github.com/G-Node/nix.git"
 
   bottle do
     cellar :any
-    sha256 "9d5eef06cd610953599aefa126b627d6602fb8d2217ab7af473436e979564637" => :sierra
-    sha256 "a376b2c89011e00b34f2db1f30b6872bb1335923dcf1f88f5556cc4596a064df" => :el_capitan
-    sha256 "321f02bd31ab9889362259d75a273e5624878da337ff9d6a352aa9c291cfe251" => :yosemite
+    sha256 "fd1e4844f0e54f596bda88f2e41f437d3e30c8ed4371bd45e46ae7b013011cf2" => :sierra
+    sha256 "e149b00bb385e5de24cffce40f2134a9d9150dd6754eac7459757e80a8c5ff99" => :el_capitan
+    sha256 "dabcc61a759654f18f05440f79bf482c991bee447b0e6836ce39f77064f2c48e" => :yosemite
   end
 
   depends_on "cmake" => :build

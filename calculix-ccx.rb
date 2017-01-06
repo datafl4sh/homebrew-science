@@ -4,13 +4,14 @@ class CalculixCcx < Formula
   url "http://www.dhondt.de/ccx_2.11.src.tar.bz2"
   version "2.11"
   sha256 "11588c7a2836cadbc4c6f2b866b0daa67512eebe755887094a76a997e6dc2493"
-  revision 1
+  revision 2
 
   bottle do
     cellar :any
-    sha256 "295f3dba9dddeb95f409800f4d56404aeb3a1157124fcb5d0b58277d5c94f5c4" => :el_capitan
-    sha256 "f32e5da68f500d8eaeab9ef9d7f2e96aad7a5cfa9c83251cc1a526c197048325" => :yosemite
-    sha256 "88dfee5dae610f5d34386d8ee0dc14f973520693eddf62f653febd15fc4ef1f1" => :mavericks
+    sha256 "ae514aec0b1e12681d080f25fdf39acbe192b1634b13d70fa4b1ce8699e5bcfc" => :sierra
+    sha256 "1c8a02e9c767f894fa291452a42c749f59f38effacae5189c3a1acd5375a4b63" => :el_capitan
+    sha256 "ffd57201a3c48a472dbd5c000ea3d2d2a29b55c369c2639bbe4e35cad74b0cd7" => :yosemite
+    sha256 "d185f40f5cdf35b6703b37b596d8c0f84733e3c5979d83b655754974d495444d" => :x86_64_linux
   end
 
   option "with-openmp", "build with OpenMP support"
@@ -62,12 +63,16 @@ class CalculixCcx < Formula
     fflags << "-fopenmp" if build.with? "openmp"
     cflags = %w[-O2 -I../../spooles -DARCH=Linux -DSPOOLES -DARPACK -DMATRIXSTORAGE]
     cflags << "-DUSE_MT=1" if build.with? "openmp"
+    libs = ["$(DIR)/spooles.a", "$(shell pkg-config --libs arpack)"]
+    # ARPACK uses Accelerate on macOS and OpenBLAS on Linux
+    libs << "-framework accelerate" if OS.mac?
+    libs << "-lopenblas -pthread" if OS.linux? # OpenBLAS uses pthreads
     args = ["CC=#{ENV.cc}",
             "FC=#{ENV.fc}",
             "CFLAGS=#{cflags.join(" ")}",
             "FFLAGS=#{fflags.join(" ")}",
             "DIR=../../spooles",
-            "LIBS=$(DIR)/spooles.a $(shell pkg-config --libs arpack)"]
+            "LIBS=#{libs.join(" ")}"]
     target = Pathname.new("ccx_2.11/src/ccx_2.11")
     system "make", "-C", target.dirname, target.basename, *args
     bin.install target
@@ -81,7 +86,7 @@ class CalculixCcx < Formula
 
   test do
     cp "#{pkgshare}/spring1.inp", testpath
-    system "ccx_2.11", "spring1"
+    system "#{bin}/ccx_2.11", "spring1"
   end
 end
 

@@ -4,19 +4,17 @@ class G2o < Formula
   url "https://github.com/RainerKuemmerle/g2o/archive/20160424_git.tar.gz"
   version "2016-04-24"
   sha256 "31abd5f4acf8407c18318b04f3ffc867c8ea7de89f18d51f9e92eb734d523b24"
+  revision 1
 
   bottle do
-    cellar :any
-    sha256 "215196968627add9914a78f8783b284639b6616d438631bb8fa6a03fa859736a" => :el_capitan
-    sha256 "d5ec14194a7d06428dad81e08f2cc60f82302447328f170cea89397c56de12c1" => :yosemite
-    sha256 "86807d958811da65df96019c55f7be548d704992babdf9e706a0d88b9613c951" => :mavericks
+    sha256 "99f76190dede20cc71932e7839968f93f2d2bc013a38a7da20e2751e97f9809c" => :sierra
+    sha256 "becd7cd3f246ca0b3c57d85e593e60ce25e65612d5780671ca3a96a94bc9e261" => :el_capitan
+    sha256 "9a18728b140b1b8229e0c74931dad900c749b34c0351cfaf2d73cb8af38811f8" => :yosemite
   end
 
   depends_on "cmake" => :build
   depends_on "eigen"
   depends_on "suite-sparse" => :recommended
-  depends_on "qt" => :optional
-  depends_on "libqglviewer" => :optional
 
   def install
     cmake_args = ["-DBUILD_CSPARSE=" + ((build.with? "suite-sparse") ? "OFF" : "ON")]

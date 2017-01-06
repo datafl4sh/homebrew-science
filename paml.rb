@@ -1,18 +1,18 @@
 class Paml < Formula
   desc "phylogenetic analysis by maximum likelihood"
   homepage "http://abacus.gene.ucl.ac.uk/software/paml.html"
-  url "http://abacus.gene.ucl.ac.uk/software/paml4.9a.tgz"
-  version "4.9a"
-  sha256 "1400b6a48aa7ba2dee637352430a1f64594674168cf7a749ac79093da9a39ef4"
+  url "http://abacus.gene.ucl.ac.uk/software/paml4.9c.tgz"
+  version "4.9c"
+  sha256 "92009a3138bdddf1c99f4756ded74c33618214450ad5ada497870e210ea141a1"
   # doi "10.1093/molbev/msm088"
   # tag "bioinformatics"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "c5b4ef918aa14cea7ec3229e3ea6fd1c2532d0e54942e6dcbb848a383af8484b" => :el_capitan
-    sha256 "a4fadee3d6a50cc7f397dffc9df49bea091c3c5d2ced50166213d788a3551a1e" => :yosemite
-    sha256 "8940747b21e50aa40549583a5e2490b5060268506a21d296f66f157ecf2d2b60" => :mavericks
-    sha256 "8b1a2c4464a185946b9ef7e649a6b5a052c604c8767668df78e30e161a0d5de0" => :x86_64_linux
+    sha256 "f29be1846d157d969d5acd700273434eb69de5629c8b7c0e6e02baf3c160ee24" => :sierra
+    sha256 "1c300304f8a0b12a76dff8e8ccb4a61302e3194bb03f6417cd8c74c4a7d7384e" => :el_capitan
+    sha256 "ae0795e757829c10687996d86a6aee83162103bd42b862bf79c6c392d0f93240" => :yosemite
+    sha256 "21c8e9bd97d148cea7e6c6617316bfe2c4c33d7cb130488b1a2cfdf58d24ed68" => :x86_64_linux
   end
 
   def install
@@ -38,6 +38,6 @@ class Paml < Formula
 
   test do
     cp Dir[doc/"examples/DatingSoftBound/*"], testpath
-    system "infinitesites"
+    system "#{bin}/infinitesites"
   end
 end

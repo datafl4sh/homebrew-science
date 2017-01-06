@@ -4,12 +4,13 @@ class Ncview < Formula
   url "ftp://cirrus.ucsd.edu/pub/ncview/ncview-2.1.7.tar.gz"
   mirror "https://fossies.org/linux/misc/ncview-2.1.7.tar.gz"
   sha256 "a14c2dddac0fc78dad9e4e7e35e2119562589738f4ded55ff6e0eca04d682c82"
-  revision 1
+  revision 2
 
   bottle do
-    sha256 "5f34c0cf063d849c6234ce94574e91d1b53b5645904bd6872bc77b4ff1b0e4f1" => :el_capitan
-    sha256 "4f31df722ff766d37db0b9e0ef09f5e6a01001f472088d9da4a56ee19c635190" => :yosemite
-    sha256 "9ffb26848b261f24f7592eedab5f6c7e6512bb93360e74a4da65625c627a1a0b" => :mavericks
+    sha256 "699f3ffdf7ffab5ce8f8f6eb47728af1a4584600b4b1641b975592b4364430ae" => :sierra
+    sha256 "b51050ba2fda573b144999fc7eed547debaad78a73f867c951beb51abff59e17" => :el_capitan
+    sha256 "623fb9f94303ec78c952461dd1498a1c43155c38f09cb5d486a7ee6ff2d2d11c" => :yosemite
+    sha256 "de8b243eb5287debcc7d377b2a4218ef690d673c1632ad60b8bface73f0a8998" => :x86_64_linux
   end
 
   depends_on :x11
@@ -23,6 +24,6 @@ class Ncview < Formula
   end
 
   test do
-    assert_match /Ncview #{version} /, shell_output("#{bin}/ncview -c 2>&1")
+    assert_match "Ncview #{version}", pipe_output("#{bin}/ncview -c 2>&1")
   end
 end

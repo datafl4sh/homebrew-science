@@ -4,16 +4,16 @@ class Blast < Formula
   # doi "10.1016/S0022-2836(05)80360-2"
   # tag "bioinformatics"
 
-  url "ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.4.0/ncbi-blast-2.4.0+-src.tar.gz"
-  mirror "ftp://ftp.hgc.jp/pub/mirror/ncbi/blast/executables/blast+/2.4.0/ncbi-blast-2.4.0+-src.tar.gz"
-  version "2.4.0"
-  sha256 "ab9a35086389a6b67c777ee9f535b0eedf203b814cad5347933cc26d6694c992"
+  url "ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.5.0/ncbi-blast-2.5.0+-src.tar.gz"
+  mirror "ftp://ftp.hgc.jp/pub/mirror/ncbi/blast/executables/blast+/2.5.0/ncbi-blast-2.5.0+-src.tar.gz"
+  version "2.5.0"
+  sha256 "cce122a29d309127a478353856b351914232e78a9546941781ff0a4c18ec9c54"
 
   bottle do
-    sha256 "c0463ad6d88ee64802b1c28f1f8779c65896d56c7cf57851bf0119f46b0e2fea" => :el_capitan
-    sha256 "a358dc09e345cc763a93410dbecd39c2b2b90f5d53701447b4d9be589ba67f97" => :yosemite
-    sha256 "21242a25404af26697d038242a596864cde22bf57603692baf59b72e765490dc" => :mavericks
-    sha256 "74264feadf7a80615bcba06462dd7ddfdc428a3780b4b213ab2c46e312f4f3eb" => :x86_64_linux
+    sha256 "4495b5f379a686f3ed89fe894a1b3c03c67720f219a049ef4f463eb4996fe5cb" => :sierra
+    sha256 "8a1eda783cd2242d39acd956ff180b3d7220c93c8330826d7d75c13668ba56ec" => :el_capitan
+    sha256 "9e5588eb5d9d83ead8ceb140f2479f4f6ded2ab88181d1e5c59a857e04f39ea0" => :yosemite
+    sha256 "33d69f5a77a69acabbe90ceb1114b64073aae746863c7d66f224a4420ef1b4a5" => :x86_64_linux
   end
 
   # Fix configure: error: Do not know how to build MT-safe with compiler g++-5 5.1.0
@@ -73,6 +73,9 @@ class Blast < Formula
     system "make"
 
     rm prefix/"libexec" if build.without? "static"
+
+    # Do not deliver this folder, it makes "make install fail" with "Inappropriate file type or format"
+    rm_rf buildpath/"c++/ReleaseMT/inc/common/"
 
     system "make", "install"
 
